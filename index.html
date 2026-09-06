@@ -16,7 +16,7 @@
       --primary-blue: #0022FF;
       --glow-blue: rgba(0, 34, 255, 0.4);
       --bg-dark: #05070c;
-      --panel-bg: rgba(10, 14, 23, 0.75);
+      --panel-bg: rgba(10, 14, 23, 0.85);
       --card-bg: rgba(15, 20, 32, 0.75);
       --border-color: rgba(255, 255, 255, 0.12);
       --text-main: #ffffff;
@@ -32,7 +32,7 @@
       --primary-blue: #0044FF;
       --glow-blue: rgba(0, 68, 255, 0.25);
       --bg-dark: #eef2f7;
-      --panel-bg: rgba(255, 255, 255, 0.85);
+      --panel-bg: rgba(255, 255, 255, 0.9);
       --card-bg: rgba(255, 255, 255, 0.85);
       --border-color: rgba(0, 0, 0, 0.12);
       --text-main: #1e293b;
@@ -57,30 +57,34 @@
       background-color: var(--bg-dark);
       color: var(--text-main);
       user-select: none;
+      touch-action: none;
     }
 
     body { display: flex; }
 
-    /* SIDEBAR */
+    /* SIDEBAR & HİZALAMA DÜZELTMELERİ */
     #sidebar {
       width: 320px; min-width: 320px; height: 100vh;
       background: var(--panel-bg); backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px); border-right: 1px solid var(--border-color);
-      padding: 20px; display: flex; flex-direction: column; z-index: 100;
+      padding: 20px; display: flex; flex-direction: column; z-index: 1000;
       box-shadow: 10px 0 30px rgba(0,0,0,0.2); transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
 
     #sidebar.collapsed { margin-left: -320px; }
 
+    /* OK TUŞU HİZALAMA */
     .sidebar-toggle-btn {
-      position: absolute; top: 20px; right: -40px; width: 36px; height: 36px;
+      position: absolute; top: 18px; right: -42px; width: 36px; height: 36px;
       background: var(--primary-blue); border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center;
       cursor: pointer; z-index: 1001; box-shadow: 0 4px 15px var(--glow-blue); transition: transform 0.3s ease;
     }
 
-    #sidebar.collapsed .sidebar-toggle-btn { transform: rotate(180deg); }
+    #sidebar.collapsed .sidebar-toggle-btn { 
+      transform: rotate(180deg); 
+    }
 
     .brand-section { display: flex; flex-direction: column; gap: 14px; flex: 1; overflow: hidden; }
 
@@ -96,14 +100,26 @@
       gap: 10px;
     }
 
+    .guide-link-text {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      text-decoration: underline;
+      cursor: pointer;
+      text-align: right;
+      padding-right: 4px;
+      transition: opacity 0.2s;
+    }
+    .guide-link-text:hover { opacity: 0.8; }
+
     .theme-toggle-container, .lang-toggle-container {
       display: flex; align-items: center; justify-content: space-between;
       background: var(--input-bg); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px;
     }
 
     .theme-switch-btn, .lang-switch-btn {
-      background: var(--primary-blue); color: #fff; border: none; padding: 5px 10px;
-      border-radius: 6px; font-size: 0.7rem; font-weight: 700; cursor: pointer;
+      background: var(--primary-blue); color: #fff; border: none; padding: 8px 12px;
+      border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
     }
 
     .agency-footer-text {
@@ -118,9 +134,9 @@
     }
 
     .btn-add {
-      width: 100%; padding: 12px; background: var(--primary-blue); color: #fff; border: none;
-      border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-      cursor: pointer; box-shadow: 0 4px 15px var(--glow-blue);
+      width: 100%; padding: 14px; background: var(--primary-blue); color: #fff; border: none;
+      border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      cursor: pointer; box-shadow: 0 4px 15px var(--glow-blue); min-height: 44px;
     }
 
     .boards-depot {
@@ -133,20 +149,21 @@
     .boards-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
 
     .board-item {
-      padding: 10px 12px; background: var(--input-bg); border: 1px solid var(--border-color);
-      border-radius: 8px; font-size: 0.75rem; cursor: pointer; display: flex; justify-content: space-between;
+      padding: 12px; background: var(--input-bg); border: 1px solid var(--border-color);
+      border-radius: 8px; font-size: 0.8rem; cursor: pointer; display: flex; justify-content: space-between;
       align-items: center; color: var(--text-main); transition: background 0.2s ease, border-color 0.2s ease;
+      min-height: 44px;
     }
 
     .board-item:hover { border-color: var(--primary-blue); }
     .board-item.active { background: var(--primary-blue) !important; color: #fff !important; border-color: var(--primary-blue) !important; box-shadow: 0 0 12px var(--glow-blue); }
 
     .board-item-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
-    .board-item-input { background: transparent; border: none; color: inherit; font-weight: 600; font-size: 0.75rem; width: 100%; outline: none; }
+    .board-item-input { background: transparent; border: none; color: inherit; font-weight: 600; font-size: 0.8rem; width: 100%; outline: none; }
 
     .board-delete-btn {
-      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
-      border-radius: 4px; opacity: 0.6; transition: opacity 0.2s, background 0.2s; margin-left: 6px;
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; opacity: 0.7; transition: opacity 0.2s, background 0.2s; margin-left: 6px;
     }
     .board-delete-btn:hover { opacity: 1; background: rgba(255, 71, 87, 0.25); color: #ff4757; }
 
@@ -172,22 +189,28 @@
     #board-viewport { width: 100%; height: 100%; position: absolute; top: 0; left: 0; transform-origin: 0 0; }
     #selection-box { position: absolute; border: 1px dashed var(--primary-blue); background: rgba(0, 34, 255, 0.15); pointer-events: none; z-index: 999; display: none; }
 
+    /* CANVAS BAŞLIĞI ÇAKIŞMA ÖNLEYİCİ MESAFE */
     .active-board-title {
-      position: absolute; top: 15px; left: 55px; z-index: 50; background: var(--panel-bg); backdrop-filter: blur(15px);
+      position: absolute; top: 15px; left: 60px; z-index: 50; background: var(--panel-bg); backdrop-filter: blur(15px);
       padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); font-size: 0.8rem;
       font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 6px; cursor: pointer;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #sidebar:not(.collapsed) ~ #board-container .active-board-title {
+      left: 360px; /* Sidebar açıkken başlık sağa kayar */
     }
 
     .board-title-editable { outline: none; border-bottom: 1px dashed transparent; padding: 2px 4px; border-radius: 4px; }
     .board-title-editable:focus { border-bottom-color: var(--primary-blue); background: var(--input-bg); }
 
     .board-header {
-      position: absolute; top: 15px; right: 15px; display: flex; align-items: center; gap: 15px; z-index: 50;
+      position: absolute; top: 15px; right: 15px; display: flex; align-items: center; gap: 12px; z-index: 50;
       background: var(--panel-bg); backdrop-filter: blur(15px); padding: 8px 16px; border-radius: 20px;
       border: 1px solid var(--border-color);
     }
 
-    .text-link-btn { background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-decoration: underline; display: flex; align-items: center; gap: 4px; }
+    .text-link-btn { background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-decoration: underline; display: flex; align-items: center; gap: 4px; min-height: 36px; }
 
     /* KART & METİN STİLLERİ */
     .card {
@@ -200,11 +223,11 @@
     .card.grouped, .canvas-text-element.grouped { box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.4), 0 0 10px var(--glow-blue); border-color: rgba(0, 34, 255, 0.5) !important; }
     .card.selected, .canvas-text-element.selected { border-color: var(--primary-blue) !important; box-shadow: 0 0 20px var(--glow-blue) !important; }
 
-    .resizer { width: 16px; height: 16px; position: absolute; right: 0; bottom: 0; cursor: nwse-resize; z-index: 10; touch-action: none; }
-    .resizer::after { content: ''; position: absolute; right: 4px; bottom: 4px; width: 6px; height: 6px; border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); }
+    .resizer { width: 24px; height: 24px; position: absolute; right: 0; bottom: 0; cursor: nwse-resize; z-index: 10; touch-action: none; }
+    .resizer::after { content: ''; position: absolute; right: 6px; bottom: 6px; width: 8px; height: 8px; border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); }
 
     .card-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .card-tag { font-size: 0.55rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+    .card-tag { font-size: 0.55rem; font-weight: 700; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; }
     .tag-video { background: rgba(255, 71, 87, 0.15); color: #ff4757; }
     .tag-design { background: rgba(46, 213, 115, 0.15); color: #2ed573; }
     .tag-photo { background: rgba(30, 144, 255, 0.15); color: #1e90ff; }
@@ -216,55 +239,94 @@
     .card-link { font-size: 0.65rem; color: var(--primary-blue); text-decoration: underline; margin-top: 2px; display: inline-block; pointer-events: auto; }
     
     .card-delete {
-      width: 18px; height: 18px; background: var(--input-bg); border-radius: 50%; color: var(--text-muted);
+      width: 24px; height: 24px; background: var(--input-bg); border-radius: 50%; color: var(--text-muted);
       display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto;
       transition: background 0.2s, color 0.2s;
     }
     .card-delete:hover { background: rgba(255, 71, 87, 0.2); color: #ff4757; }
 
     .canvas-text-element {
-      position: absolute; min-width: 80px; min-height: 35px; padding: 6px 12px; border-radius: 6px; cursor: grab;
+      position: absolute; min-width: 80px; min-height: 35px; padding: 8px 14px; border-radius: 6px; cursor: grab;
       touch-action: none; color: var(--text-main); border: 1px dashed transparent; transition: border-color 0.2s, background 0.2s;
       display: inline-flex; align-items: center; gap: 8px; font-weight: 600; white-space: pre-wrap; word-break: break-word;
     }
     .canvas-text-element:hover { border-color: var(--border-color); background: var(--input-bg); }
 
     .canvas-text-delete {
-      width: 16px; height: 16px; background: rgba(255, 71, 87, 0.2); color: #ff4757; border-radius: 50%;
-      display: none; align-items: center; justify-content: center; cursor: pointer; position: absolute; top: -8px; right: -8px;
+      width: 20px; height: 20px; background: rgba(255, 71, 87, 0.2); color: #ff4757; border-radius: 50%;
+      display: none; align-items: center; justify-content: center; cursor: pointer; position: absolute; top: -10px; right: -10px;
     }
     .canvas-text-element:hover .canvas-text-delete { display: flex; }
 
-    /* MODAL */
+    /* MODAL & FILE UPLOAD */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(15px);
       z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
     }
 
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
-    .glass-modal { width: 90%; max-width: 440px; background: var(--modal-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px; color: var(--text-main); }
-    .glass-modal input, .glass-modal select, .glass-modal textarea { padding: 8px; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 6px; font-size: 0.8rem; outline: none; }
+    .glass-modal { width: 92%; max-width: 460px; background: var(--modal-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px; color: var(--text-main); }
+    .glass-modal input, .glass-modal select, .glass-modal textarea { padding: 10px; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 6px; font-size: 0.85rem; outline: none; }
+
+    .file-upload-wrapper {
+      display: flex; flex-direction: column; gap: 6px; margin-top: 6px;
+    }
+    .file-upload-label {
+      font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;
+    }
+    .custom-file-upload {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px; background: var(--input-bg); border: 1px dashed var(--border-color);
+      border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--text-main);
+      transition: border-color 0.2s, background 0.2s; text-align: center;
+    }
+    .custom-file-upload:hover { border-color: var(--primary-blue); background: rgba(0, 34, 255, 0.05); }
+    #modalFileInput { display: none; }
+    .file-preview-info { font-size: 0.7rem; color: var(--primary-blue); word-break: break-all; display: none; }
+
+    .guide-content-box {
+      display: flex; flex-direction: column; gap: 10px; font-size: 0.8rem; line-height: 1.5; color: var(--text-main);
+      max-height: 320px; overflow-y: auto; padding-right: 4px;
+    }
+    .guide-item {
+      background: var(--input-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px;
+    }
+    .guide-item strong { color: var(--primary-blue); display: block; margin-bottom: 2px; }
 
     .group-items-preview { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; margin-top: 8px; }
-    .group-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.75rem; }
+    .group-item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.8rem; }
 
     /* MINIMAL CONTEXT MENU */
     #context-menu {
-      position: absolute; z-index: 3000; width: 160px; background: var(--context-bg);
-      border: 1px solid var(--border-color); border-radius: 8px; padding: 4px 0; display: none;
+      position: absolute; z-index: 3000; width: 180px; background: var(--context-bg);
+      border: 1px solid var(--border-color); border-radius: 8px; padding: 6px 0; display: none;
       box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px);
     }
     .context-menu-item {
-      padding: 8px 14px; font-size: 0.72rem; font-weight: 500; color: var(--text-main);
+      padding: 10px 16px; font-size: 0.78rem; font-weight: 500; color: var(--text-main);
       cursor: pointer; transition: background 0.15s ease;
     }
     .context-menu-item:hover { background: var(--primary-blue); color: #fff; }
+
+    /* TABLET & MOBİL OPTİMİZASYON KURAL KÜMESİ */
+    @media (max-width: 1024px) {
+      #sidebar {
+        position: absolute; left: 0; top: 0;
+        margin-left: -320px;
+      }
+      #sidebar:not(.collapsed) {
+        margin-left: 0;
+      }
+      .active-board-title { left: 60px !important; font-size: 0.75rem; padding: 6px 12px; }
+      .board-header { padding: 6px 12px; gap: 8px; }
+      .text-link-btn { font-size: 0.7rem; }
+    }
   </style>
 </head>
 <body data-theme="dark">
 
   <!-- SIDEBAR -->
-  <aside id="sidebar">
+  <aside id="sidebar" class="collapsed">
     <button class="sidebar-toggle-btn" onclick="toggleSidebar()">◀</button>
     <div class="brand-section">
       <div class="brand-logo">
@@ -282,6 +344,9 @@
       </div>
 
       <div class="sidebar-bottom">
+        <!-- KULLANIM TALİMATI TIKLANABİLİR YAZISI -->
+        <span class="guide-link-text" id="lblGuideLink" onclick="openGuideModal()">Nasıl Kullanılır?</span>
+
         <div class="theme-toggle-container">
           <span style="font-size: 0.7rem; font-weight:700;" id="lblViewMode">Görünüm Modu</span>
           <button class="theme-switch-btn" id="themeBtn" onclick="toggleTheme()">Dark</button>
@@ -321,7 +386,7 @@
     </div>
   </main>
 
-  <!-- SAĞ TIK MINIMAL MENÜ -->
+  <!-- SAĞ TIK / UZUN BASMA MINIMAL MENÜ -->
   <div id="context-menu">
     <div class="context-menu-item" id="menu-edit-btn" style="display:none;" onclick="contextEditItem()">Düzenle</div>
     <div class="context-menu-item" id="menu-group-preview-btn" style="display:none;" onclick="contextOpenGroupPreview()">Grup İçeriğini Gör</div>
@@ -348,13 +413,51 @@
       <textarea id="modalCardTitle" rows="3" placeholder="Fikir Başlığı / Metin Notu"></textarea>
       
       <div id="urlInputsGroup">
+        <div class="file-upload-wrapper">
+          <span class="file-upload-label" id="lblFileUpload">Cihazdan Fotoğraf Yükle</span>
+          <label for="modalFileInput" class="custom-file-upload" id="lblSelectFile">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Görsel Seç / Yükle
+          </label>
+          <input type="file" id="modalFileInput" accept="image/*" onchange="handleFileSelect(event)">
+          <div class="file-preview-info" id="filePreviewInfo"></div>
+        </div>
+
         <input type="text" id="modalTargetUrl" placeholder="Link URL (https...)" style="width:100%; margin-top:8px;">
         <input type="text" id="modalImageUrl" placeholder="Görsel URL (Boşsa otomatiktir)" style="width:100%; margin-top:8px;">
       </div>
 
       <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
-        <button onclick="closeModal()" id="btnModalCancel" style="padding:8px 12px; background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer;">İptal</button>
-        <button onclick="saveModalData()" id="btnModalSave" style="padding:8px 12px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Kaydet</button>
+        <button onclick="closeModal()" id="btnModalCancel" style="padding:10px 14px; background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer;">İptal</button>
+        <button onclick="saveModalData()" id="btnModalSave" style="padding:10px 14px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NASIL KULLANILIR MODALI -->
+  <div class="modal-overlay" id="guideModal">
+    <div class="glass-modal">
+      <h3 style="font-size:0.95rem; color:var(--primary-blue);" id="lblGuideTitle">Kullanım Talimatları</h3>
+      <div class="guide-content-box" id="guideContent">
+        <div class="guide-item">
+          <strong>1. Yeni Öğe / Fotoğraf Ekleme</strong>
+          Sol paneldeki "+ YENİ REFERANS EKLE" butonunu kullanabilir veya direkt panoda Sağ Tıklayıp (Tablette uzun basıp) öge ekleyebilirsiniz. Ayrıca cihazınızdan fotoğraf seçip yükleyebilirsiniz.
+        </div>
+        <div class="guide-item">
+          <strong>2. Hızlı Yapıştırma (CTRL+V / Paste)</strong>
+          Instagram, YouTube, Pinterest linklerini kopyalayıp panodayken doğrudan yapıştırdığınızda kart otomatik oluşturulur.
+        </div>
+        <div class="guide-item">
+          <strong>3. Yakınlaştırma & Kaydırma (Zoom / Pan)</strong>
+          Fare tekerleği veya tabletinizde iki parmağınızla çimdik hareketi yaparak yakınlaşabilirsiniz. Boş alanda fareye basılı tutarak veya çift parmakla panoyu kaydırabilirsiniz.
+        </div>
+        <div class="guide-item">
+          <strong>4. Çoklu Seçim & Gruplama</strong>
+          Boş alandan basılı tutup sürükleyerek çoklu alan seçimi yapabilir, seçilen öğelere sağ tıklayıp "Grupla" diyebilirsiniz.
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; margin-top:6px;">
+        <button onclick="closeGuideModal()" id="btnCloseGuide" style="padding:10px 16px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Anladım</button>
       </div>
     </div>
   </div>
@@ -368,8 +471,8 @@
       <div class="group-items-preview" id="groupItemsPreview"></div>
 
       <div style="display:flex; justify-content:space-between; margin-top:8px;">
-        <button onclick="ungroupCurrentModalGroup()" id="btnUngroup" style="padding:8px 12px; background:rgba(255,71,87,0.2); color:#ff4757; border:none; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Grubu Dağıt</button>
-        <button onclick="closeGroupModal()" id="btnCloseGroup" style="padding:8px 12px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Kapat</button>
+        <button onclick="ungroupCurrentModalGroup()" id="btnUngroup" style="padding:10px 14px; background:rgba(255,71,87,0.2); color:#ff4757; border:none; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Grubu Dağıt</button>
+        <button onclick="closeGroupModal()" id="btnCloseGroup" style="padding:10px 14px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Kapat</button>
       </div>
     </div>
   </div>
@@ -424,12 +527,13 @@
     window.rightClickPos = { x: 100, y: 100 };
     window.targetCardForContext = null;
     window.activeModalGroupId = null;
+    window.uploadedBase64Image = "";
 
     window.zoomScale = 1;
     window.panX = 0;
     window.panY = 0;
 
-    const closeSvg = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+    const closeSvg = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
 
     const dict = {
       TR: {
@@ -461,7 +565,12 @@
         btnClose: "Kapat",
         btnGoLink: "Bağlantıya Git",
         defaultText: "Buraya yazın...",
-        general: "Genel"
+        general: "Genel",
+        fileUpload: "Cihazdan Fotoğraf Yükle",
+        selectFile: "Görsel Seç / Yükle",
+        guideLink: "Nasıl Kullanılır?",
+        guideTitle: "Kullanım Talimatları",
+        btnCloseGuide: "Anladım"
       },
       EN: {
         addRef: "+ Add New Reference",
@@ -492,7 +601,12 @@
         btnClose: "Close",
         btnGoLink: "Open Link",
         defaultText: "Type here...",
-        general: "General"
+        general: "General",
+        fileUpload: "Upload Photo From Device",
+        selectFile: "Choose / Upload Image",
+        guideLink: "How to Use?",
+        guideTitle: "Usage Instructions",
+        btnCloseGuide: "Got it"
       }
     };
 
@@ -506,6 +620,10 @@
       document.getElementById('lblBackToTask').innerText = l.backToTask;
       document.getElementById('lblDownloadPdf').innerText = l.downloadPdf;
       document.getElementById('lblClearBoard').innerText = l.clearBoard;
+
+      document.getElementById('lblGuideLink').innerText = l.guideLink;
+      document.getElementById('lblGuideTitle').innerText = l.guideTitle;
+      document.getElementById('btnCloseGuide').innerText = l.btnCloseGuide;
 
       document.getElementById('ctxAddText').innerText = l.ctxAddText;
       document.getElementById('ctxAddCard').innerText = l.ctxAddCard;
@@ -521,6 +639,9 @@
       document.getElementById('modalCardTitle').placeholder = l.modalTitlePh;
       document.getElementById('modalTargetUrl').placeholder = l.modalUrlPh;
       document.getElementById('modalImageUrl').placeholder = l.modalImgPh;
+
+      document.getElementById('lblFileUpload').innerText = l.fileUpload;
+      document.getElementById('lblSelectFile').childNodes[2].nodeValue = " " + l.selectFile;
 
       document.getElementById('btnModalCancel').innerText = l.btnCancel;
       document.getElementById('btnModalSave').innerText = l.btnSave;
@@ -538,6 +659,14 @@
       window.currentLang = window.currentLang === 'TR' ? 'EN' : 'TR';
       localStorage.setItem('137_lang', window.currentLang);
       applyLanguage();
+    };
+
+    window.openGuideModal = function() {
+      document.getElementById('guideModal').classList.add('active');
+    };
+
+    window.closeGuideModal = function() {
+      document.getElementById('guideModal').classList.remove('active');
     };
 
     function updateTransform() {
@@ -588,6 +717,7 @@
 
       let isPanning = false;
       let startX = 0, startY = 0;
+      let initialPinchDistance = null;
 
       container.addEventListener('mousedown', (e) => {
         if (e.button === 1 || (e.button === 0 && e.spaceKey)) {
@@ -598,6 +728,37 @@
           e.preventDefault();
         }
       });
+
+      container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          initialPinchDistance = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+        } else if (e.touches.length === 1 && (e.target === container || e.target.id === 'board-viewport')) {
+          isPanning = true;
+          startX = e.touches[0].clientX - window.panX;
+          startY = e.touches[0].clientY - window.panY;
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && initialPinchDistance) {
+          e.preventDefault();
+          const currentDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          const factor = currentDist / initialPinchDistance;
+          let newScale = Math.min(Math.max(0.3, window.zoomScale * (factor > 1 ? 1.02 : 0.98)), 3.0);
+          window.zoomScale = newScale;
+          updateTransform();
+        } else if (isPanning && e.touches.length === 1) {
+          window.panX = e.touches[0].clientX - startX;
+          window.panY = e.touches[0].clientY - startY;
+          updateTransform();
+        }
+      }, { passive: false });
 
       window.addEventListener('mousemove', (e) => {
         if (!isPanning) return;
@@ -611,6 +772,11 @@
           isPanning = false;
           container.style.cursor = 'default';
         }
+      });
+
+      window.addEventListener('touchend', () => {
+        isPanning = false;
+        initialPinchDistance = null;
       });
     }
 
@@ -801,7 +967,6 @@
       });
     }
 
-    // GRUP AÇMA MODALI
     window.openGroupModal = function(groupId) {
       window.activeModalGroupId = groupId;
       const groupItems = window.cardsData.filter(c => c.groupId === groupId);
@@ -816,7 +981,7 @@
           row.className = 'group-item-row';
           row.innerHTML = `
             <span>${item.title || 'İsimsiz Öğe'}</span>
-            <button onclick="removeFromGroup(${item.id})" style="background:none; border:none; color:#ff4757; cursor:pointer; font-weight:bold;">Çıkar</button>
+            <button onclick="removeFromGroup(${item.id})" style="background:none; border:none; color:#ff4757; cursor:pointer; font-weight:bold; padding:6px 10px;">Çıkar</button>
           `;
           previewEl.appendChild(row);
         });
@@ -849,7 +1014,6 @@
       }
     };
 
-    // RENDER: KARTLAR VE METİNLER
     window.renderCards = function() {
       const viewport = document.getElementById('board-viewport');
       const l = dict[window.currentLang];
@@ -874,7 +1038,6 @@
           makeInteractive(textEl, card, true);
           viewport.appendChild(textEl);
         } else {
-          // STANDART KART
           const cardEl = document.createElement('div');
           cardEl.className = `card ${card.groupId ? 'grouped' : ''} ${window.selectedCardIds.includes(card.id) ? 'selected' : ''}`;
           cardEl.style.left = `${card.x}px`;
@@ -1171,19 +1334,17 @@
     function setupContextMenu() {
       const board = document.getElementById('board-container');
       const menu = document.getElementById('context-menu');
+      let touchTimer = null;
 
-      board.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        
+      function openMenuAt(clientX, clientY, targetEl) {
         const container = document.getElementById('board-container');
         const rect = container.getBoundingClientRect();
         
         window.rightClickPos = {
-          x: (e.clientX - rect.left - window.panX) / window.zoomScale,
-          y: (e.clientY - rect.top - window.panY) / window.zoomScale
+          x: (clientX - rect.left - window.panX) / window.zoomScale,
+          y: (clientY - rect.top - window.panY) / window.zoomScale
         };
 
-        const targetEl = e.target.closest('.card, .canvas-text-element');
         const editBtn = document.getElementById('menu-edit-btn');
         const groupPreviewBtn = document.getElementById('menu-group-preview-btn');
         const groupBtn = document.getElementById('menu-group-btn');
@@ -1210,10 +1371,29 @@
           groupBtn.style.display = 'none';
         }
 
-        menu.style.left = `${e.clientX}px`; 
-        menu.style.top = `${e.clientY}px`;
+        menu.style.left = `${clientX}px`; 
+        menu.style.top = `${clientY}px`;
         menu.style.display = 'block';
+      }
+
+      board.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        const targetEl = e.target.closest('.card, .canvas-text-element');
+        openMenuAt(e.clientX, e.clientY, targetEl);
       });
+
+      board.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          const touch = e.touches[0];
+          const targetEl = e.target.closest('.card, .canvas-text-element');
+          touchTimer = setTimeout(() => {
+            openMenuAt(touch.clientX, touch.clientY, targetEl);
+          }, 500);
+        }
+      });
+
+      board.addEventListener('touchend', () => { if (touchTimer) clearTimeout(touchTimer); });
+      board.addEventListener('touchmove', () => { if (touchTimer) clearTimeout(touchTimer); });
 
       document.addEventListener('click', () => menu.style.display = 'none');
     }
@@ -1247,6 +1427,20 @@
       }
     };
 
+    window.handleFileSelect = function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          window.uploadedBase64Image = evt.target.result;
+          const infoEl = document.getElementById('filePreviewInfo');
+          infoEl.innerText = `Yüklendi: ${file.name}`;
+          infoEl.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
     window.openCreateModal = function() {
       document.getElementById('modalCardId').value = '';
       document.getElementById('modalTitle').innerText = window.currentLang === 'TR' ? 'Yeni Kart Ekle' : 'Add New Card';
@@ -1257,6 +1451,9 @@
       document.getElementById('modalCardTitle').value = '';
       document.getElementById('modalTargetUrl').value = '';
       document.getElementById('modalImageUrl').value = '';
+      document.getElementById('modalFileInput').value = '';
+      document.getElementById('filePreviewInfo').style.display = 'none';
+      window.uploadedBase64Image = "";
       document.getElementById('glassModal').classList.add('active');
     };
 
@@ -1265,6 +1462,10 @@
       document.getElementById('modalCardId').value = card.id;
       document.getElementById('modalTitle').innerText = card.type === 'text' ? (window.currentLang === 'TR' ? 'Metni Düzenle' : 'Edit Text') : (window.currentLang === 'TR' ? 'Kart Özelliklerini Düzenle' : 'Edit Card Properties');
       
+      document.getElementById('modalFileInput').value = '';
+      document.getElementById('filePreviewInfo').style.display = 'none';
+      window.uploadedBase64Image = "";
+
       if (card.type === 'text') {
         document.getElementById('brandCategoryGroup').style.display = 'none';
         document.getElementById('urlInputsGroup').style.display = 'none';
@@ -1296,14 +1497,23 @@
             card.brand = document.getElementById('modalBrand').value || l.general;
             card.category = document.getElementById('modalCategory').value;
             card.url = document.getElementById('modalTargetUrl').value;
-            card.img = document.getElementById('modalImageUrl').value || (card.url ? extractSocialMediaThumbnail(card.url) : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
+            
+            if (window.uploadedBase64Image) {
+              card.img = window.uploadedBase64Image;
+            } else {
+              card.img = document.getElementById('modalImageUrl').value || (card.url ? extractSocialMediaThumbnail(card.url) : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
+            }
           }
         }
       } else {
         const brand = document.getElementById('modalBrand').value || l.general;
         const category = document.getElementById('modalCategory').value;
         const url = document.getElementById('modalTargetUrl').value;
-        const img = document.getElementById('modalImageUrl').value || (url ? extractSocialMediaThumbnail(url) : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
+        
+        let img = window.uploadedBase64Image;
+        if (!img) {
+          img = document.getElementById('modalImageUrl').value || (url ? extractSocialMediaThumbnail(url) : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
+        }
 
         window.cardsData.push({
           id: Date.now(),
