@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodboard — 137 STUDIO</title>
+  <!-- Montserrat Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- html2pdf.js for Minimal PDF Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <style>
+    :root {
+      --primary-blue: #0022FF;
+      --glow-blue: rgba(0, 34, 255, 0.4);
+      --bg-dark: #0a0c10;
+      --panel-bg: rgba(18, 22, 31, 0.85);
+      --card-bg: rgba(20, 24, 33, 0.85);
+      --border-color: rgba(255, 255, 255, 0.12);
+      --text-white: #ffffff;
+      --text-muted: #8e9aaf;
+      --board-bg: #0b0d12;
+      --grid-line-1: rgba(255, 255, 255, 0.07);
+      --grid-line-2: rgba(0, 34, 255, 0.05);
+      --context-bg: rgba(20, 24, 33, 0.95);
+      --modal-bg: rgba(20, 24, 33, 0.9);
+      --input-bg: rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="light"] {
+      --primary-blue: #0044FF;
+      --glow-blue: rgba(0, 68, 255, 0.25);
+      --bg-dark: #f0f2f5;
+      --panel-bg: rgba(255, 255, 255, 0.9);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --border-color: rgba(0, 0, 0, 0.12);
+      --text-white: #1a1d24;
+      --text-muted: #64748b;
+      --board-bg: #e5e7eb;
+      --grid-line-1: rgba(0, 0, 0, 0.06);
+      --grid-line-2: rgba(0, 68, 255, 0.04);
+      --context-bg: rgba(255, 255, 255, 0.98);
+      --modal-bg: rgba(255, 255, 255, 0.95);
+      --input-bg: rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      overflow: hidden;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .ambient-light-1 {
+      position: absolute;
+      top: -200px;
+      left: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--glow-blue) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ambient-light-2 {
+      position: absolute;
+      bottom: -200px;
+      right: -200px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, var(--glow-blue) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: 340px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 100;
+      box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      overflow-x: visible;
+      transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+      position: relative;
+    }
+
+    #sidebar.collapsed {
+      margin-left: -340px;
+    }
+
+    .sidebar-toggle-btn {
+      position: absolute;
+      top: 24px;
+      right: -42px;
+      width: 36px;
+      height: 36px;
+      background: var(--primary-blue);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 15px var(--glow-blue);
+      transition: background 0.2s, transform 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-toggle-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    #sidebar.collapsed .sidebar-toggle-btn {
+      transform: rotate(180deg);
+    }
+
+    .brand-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .brand-logo h1 {
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+      color: var(--text-white);
+      text-shadow: 0 0 15px var(--glow-blue);
+    }
+
+    .brand-badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--primary-blue);
+      text-transform: uppercase;
+      background: rgba(0, 34, 255, 0.12);
+      border: 1px solid rgba(0, 34, 255, 0.3);
+      padding: 3px 8px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+
+    .theme-toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+    }
+
+    .theme-toggle-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-white);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .theme-switch-btn {
+      background: var(--primary-blue);
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px var(--glow-blue);
+    }
+
+    .theme-switch-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .paste-hint {
+      background: rgba(0, 34, 255, 0.08);
+      border: 1px dashed rgba(0, 34, 255, 0.3);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .paste-hint span {
+      color: var(--text-white);
+      font-weight: 700;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-group label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .input-group input, .input-group select, .input-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-white);
+      font-size: 0.78rem;
+      font-weight: 400;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 12px var(--glow-blue);
+    }
+
+    .input-group select option {
+      background: var(--bg-dark);
+      color: var(--text-white);
+    }
+
+    .color-picker-wrapper {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .color-picker-wrapper input[type="color"] {
+      width: 40px;
+      height: 36px;
+      padding: 2px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+    }
+
+    .btn-add {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary-blue);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--glow-blue);
+    }
+
+    .btn-add:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    /* MOODBOARD LİSTESİ */
+    .boards-depot {
+      margin-top: 15px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+    }
+
+    .depot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .depot-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .btn-save-board {
+      font-size: 0.68rem;
+      color: var(--primary-blue);
+      background: none;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .boards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+
+    .board-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .board-item:hover {
+      background: rgba(0, 34, 255, 0.1);
+      border-color: rgba(0, 34, 255, 0.3);
+    }
+
+    .board-item.active {
+      background: var(--primary-blue) !important;
+      border-color: var(--primary-blue) !important;
+      box-shadow: 0 4px 12px var(--glow-blue);
+    }
+
+    .board-item.active .board-item-name,
+    .board-item.active .board-item-del {
+      color: #ffffff !important;
+    }
+
+    .board-item-name {
+      font-weight: 600;
+      color: var(--text-white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+      flex: 1;
+    }
+
+    .board-item-del {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .board-item-del:hover {
+      background: rgba(255, 71, 87, 0.2);
+      color: #ff4757 !important;
+    }
+
+    /* FOOTER BRANDING */
+    .sidebar-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+      margin-top: 15px;
+    }
+
+    .managed-by {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .managed-by span {
+      color: var(--text-white);
+      font-weight: 700;
+    }
+
+    /* KARELİ PANO (GRID BOARD) */
+    #board-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--board-bg);
+      background-image: 
+        linear-gradient(var(--grid-line-1) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line-1) 1px, transparent 1px),
+        linear-gradient(var(--grid-line-2) 2px, transparent 2px),
+        linear-gradient(90deg, var(--grid-line-2) 2px, transparent 2px);
+      background-size: 25px 25px, 25px 25px, 100px 100px, 100px 100px;
+      background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+      z-index: 1;
+      transition: background-color 0.3s ease;
+    }
+
+    #selection-box {
+      position: absolute;
+      border: 1px dashed var(--primary-blue);
+      background: rgba(0, 34, 255, 0.15);
+      pointer-events: none;
+      z-index: 999;
+      display: none;
+    }
+
+    .board-header {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 5;
+      background: var(--panel-bg);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .text-link-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .text-link-btn:hover {
+      color: var(--text-white);
+    }
+
+    /* GENEL KART / NOT / RESIZABLE ELEMENTLER */
+    .card {
+      position: absolute;
+      min-width: 200px;
+      min-height: 120px;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      cursor: grab;
+      resize: both;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s;
+    }
+
+    .card.selected {
+      border-color: var(--primary-blue) !important;
+      box-shadow: 0 0 20px var(--glow-blue), 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .card.grouped {
+      border-style: double !important;
+      border-width: 3px !important;
+    }
+
+    .card:active {
+      cursor: grabbing;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-blue);
+    }
+
+    .card.text-card {
+      border-style: dashed;
+    }
+
+    .card-text-display {
+      width: 100%;
+      height: 100%;
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'Montserrat', sans-serif;
+      word-break: break-word;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .card-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .card-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .tag-video { background: rgba(255, 71, 87, 0.15); color: #ff4757; border: 1px solid rgba(255, 71, 87, 0.3); }
+    .tag-design { background: rgba(46, 213, 115, 0.15); color: #2ed573; border: 1px solid rgba(46, 213, 115, 0.3); }
+    .tag-photo { background: rgba(30, 144, 255, 0.15); color: #1e90ff; border: 1px solid rgba(30, 144, 255, 0.3); }
+    .tag-text { background: rgba(128, 128, 128, 0.15); color: var(--text-white); border: 1px solid var(--border-color); }
+
+    .brand-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--text-white);
+      background: var(--input-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      text-transform: uppercase;
+    }
+
+    .card-img-wrapper {
+      flex: 1;
+      width: 100%;
+      min-height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      position: relative;
+      background: var(--input-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .card h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 6px;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    .card-edit-btn {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .card-edit-btn:hover {
+      color: var(--text-white);
+    }
+
+    .card-delete {
+      width: 20px;
+      height: 20px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.2s;
+    }
+
+    .card:hover .card-delete {
+      opacity: 1;
+    }
+
+    .card-delete:hover {
+      background: #ff4757;
+      border-color: #ff4757;
+      color: #fff;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .glass-modal {
+      width: 440px;
+      background: var(--modal-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px var(--glow-blue);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.active .glass-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: -0.3px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #ff4757;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-secondary {
+      padding: 10px 18px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      padding: 10px 18px;
+      background: var(--primary-blue);
+      border: none;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--glow-blue);
+      transition: transform 0.2s, filter 0.2s;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    /* CONTEXT MENU */
+    #context-menu {
+      position: absolute;
+      z-index: 3000;
+      width: 180px;
+      background: var(--context-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 6px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 15px var(--glow-blue);
+      display: none;
+    }
+
+    .context-menu-item {
+      padding: 8px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .context-menu-item:hover {
+      background: var(--primary-blue);
+      color: #ffffff;
+    }
+
+    .context-menu-divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <div class="ambient-light-1"></div>
+  <div class="ambient-light-2"></div>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Paneli Aç/Kapat">◀</button>
+    <div class="brand-section">
+      <div>
+        <div class="brand-badge">Creative Canvas</div>
+        <div class="brand-logo" style="margin-top: 6px;">
+          <h1>137studio</h1>
+        </div>
+      </div>
+
+      <!-- TEMA DEĞİŞTİRME BUTONU -->
+      <div class="theme-toggle-container">
+        <span class="theme-toggle-label">Görünüm Modu</span>
+        <button class="theme-switch-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+      </div>
+
+      <div class="paste-hint">
+        💡 <span>Doğrudan Yazma:</span> Panoda boş bir yere tıklayıp klavyeden yazmaya başladığınızda yeni metin kartı oluşur!
+      </div>
+
+      <div class="form-container">
+        <button class="btn-add" onclick="openCreateModal()">+ Yeni Referans Ekle</button>
+      </div>
+
+      <!-- MOODBOARD LİSTESİ -->
+      <div class="boards-depot">
+        <div class="depot-header">
+          <span class="depot-title">Moodboard Listesi</span>
+          <button class="btn-save-board" onclick="saveCurrentBoard()">+ Panoyu Kaydet</button>
+        </div>
+        <div class="boards-list" id="boardsList"></div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="managed-by">
+        DESIGNED & MANAGED BY<br><span>137 STUDIO</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CANVA / BOARD -->
+  <main id="board-container">
+    <div id="selection-box"></div>
+    <div class="board-header">
+      <a href="https://mrorbay.github.io/137-Studio-s-takip/" class="text-link-btn">İş Takibine Dön</a>
+      <button class="text-link-btn" onclick="clearBoard()">Panoyu Temizle</button>
+    </div>
+  </main>
+
+  <!-- SAĞ TIK MENÜSÜ -->
+  <div id="context-menu">
+    <div class="context-menu-item" onclick="contextAddText()">📝 Metin Ekle</div>
+    <div class="context-menu-item" onclick="contextAddCard()">🖼️ Kart Ekle</div>
+    <div class="context-menu-divider" id="menu-group-divider" style="display:none;"></div>
+    <div class="context-menu-item" id="menu-group-btn" style="display:none;" onclick="contextToggleGroup()">🔗 Grupla / Grubu Çöz</div>
+  </div>
+
+  <!-- GLASSMORPHISM MODAL -->
+  <div class="modal-overlay" id="glassModal">
+    <div class="glass-modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle">Kart Oluştur / Düzenle</span>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="form-container">
+        <input type="hidden" id="modalCardId">
+        <input type="hidden" id="modalType" value="link">
+
+        <div class="input-group">
+          <label>Marka / Müşteri</label>
+          <input type="text" id="modalBrand" placeholder="Örn: Coffeetainer, Nike...">
+        </div>
+
+        <div class="input-group" id="modalCategoryGroup">
+          <label>Kategori</label>
+          <select id="modalCategory">
+            <option value="video">Video Fikri</option>
+            <option value="design">Tasarım Fikri</option>
+            <option value="photo">Fotoğraf Fikri</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label id="modalTitleLabel">Fikir Başlığı / Metin Notu</label>
+          <textarea id="modalCardTitle" rows="3" placeholder="Referans ismi veya detaylı notunuz..."></textarea>
+        </div>
+
+        <div class="input-group" id="modalTextColorGroup" style="display: none;">
+          <label>Metin Rengi</label>
+          <div class="color-picker-wrapper">
+            <input type="color" id="modalTextColor" value="#ffffff">
+            <span style="font-size:0.75rem; color:var(--text-muted);">Renk Seçiniz</span>
+          </div>
+        </div>
+
+        <div class="input-group" id="modalUrlGroup">
+          <label>Pinterest / Instagram / Link URL</label>
+          <input type="text" id="modalTargetUrl" placeholder="https://...">
+        </div>
+
+        <div class="input-group" id="modalImageGroup">
+          <label>Önizleme Görsel URL</label>
+          <input type="text" id="modalImageUrl" placeholder="Görsel linki (Boşsa otomatik çeker)">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal()">İptal</button>
+        <button class="btn-primary" onclick="saveModalData()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HYBRID FIREBASE + OFFLINE STORAGE ENGINE -->
+  <script type="module">
+    let db = null;
+    let setRef = null;
+    let dbRef = null;
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD82U3cY-PPXzTC-Wt_EOIZvgfdswqTfT4",
+      authDomain: "studio-574ce.firebaseapp.com",
+      databaseURL: "https://studio-574ce-default-rtdb.firebaseio.com",
+      projectId: "studio-574ce",
+      storageBucket: "studio-574ce.firebasestorage.app",
+      messagingSenderId: "861579196989",
+      appId: "1:861579196989:web:7fec2452747347c1d84854"
+    };
+
+    // Firebase Modüllerini Güvenli Yükleme
+    async function initFirebase() {
+      try {
+        const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js");
+        const { getDatabase, ref, set, onValue } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js");
+
+        const app = initializeApp(firebaseConfig);
+        db = getDatabase(app);
+        setRef = set;
+        dbRef = ref;
+
+        // Firebase Dinleyicisi
+        const boardsRef = ref(db, 'boards');
+        onValue(boardsRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            window.savedBoards = data;
+            localStorage.setItem('137_saved_boards', JSON.stringify(window.savedBoards));
+
+            if (!window.savedBoards[window.currentBoardName]) {
+              window.currentBoardName = Object.keys(window.savedBoards)[0] || 'Varsayılan Pano';
+            }
+
+            window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[window.currentBoardName] || []));
+            
+            window.cardsData.forEach(c => {
+              if (c.zIndex && c.zIndex > window.highestZIndex) window.highestZIndex = c.zIndex;
+            });
+
+            renderBoardsList();
+            renderCards();
+          }
+        });
+      } catch (err) {
+        console.warn("Offline moddasınız, lokal veriler kullanılıyor.");
+      }
+    }
+
+    window.savedBoards = JSON.parse(localStorage.getItem('137_saved_boards')) || {};
+    window.currentBoardName = localStorage.getItem('137_active_board_name') || 'Varsayılan Pano';
+    window.cardsData = [];
+    window.selectedCardIds = [];
+    window.highestZIndex = 10;
+    window.rightClickPos = { x: 200, y: 200 };
+
+    // Veri Kaydetme Engine (Offline-First)
+    window.saveAllToStorage = function() {
+      window.savedBoards[window.currentBoardName] = JSON.parse(JSON.stringify(window.cardsData));
+      localStorage.setItem('137_saved_boards', JSON.stringify(window.savedBoards));
+      localStorage.setItem('137_active_board_name', window.currentBoardName);
+
+      // İnternet varsa ve Firebase yüklendiyse Firebase'e fırlat
+      if (navigator.onLine && db && setRef && dbRef) {
+        setRef(dbRef(db, 'boards'), window.savedBoards).catch(e => console.error("Firebase senkronizasyon hatası:", e));
+      }
+    };
+
+    // Bağlantı geri geldiğinde anında senkronize et
+    window.addEventListener('online', () => {
+      if (!db) {
+        initFirebase().then(() => window.saveAllToStorage());
+      } else {
+        window.saveAllToStorage();
+      }
+    });
+
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('137_theme') || 'dark';
+      setTheme(savedTheme);
+
+      // Yerel Veri Ön-Yüklemesi
+      if (Object.keys(window.savedBoards).length === 0) {
+        window.cardsData = [
+          { id: 1, type: 'link', brand: 'Coffeetainer', category: 'design', title: 'Sosyal Medya UI Referansı', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500', url: 'https://pinterest.com', x: 80, y: 80, w: 250, h: 260, zIndex: 1, groupId: null },
+          { id: 2, type: 'text', brand: 'Genel', category: 'text', title: 'Kampanya Tasarım Notları & Tipografi', textColor: '#0022FF', x: 380, y: 80, w: 260, h: 180, zIndex: 2, groupId: null }
+        ];
+        window.savedBoards[window.currentBoardName] = window.cardsData;
+        window.saveAllToStorage();
+      } else {
+        window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[window.currentBoardName] || []));
+      }
+
+      renderBoardsList();
+      renderCards();
+
+      setupAreaSelection();
+      setupDirectBoardTyping();
+      setupContextMenu();
+
+      // İnternet varsa Firebase başlat
+      if (navigator.onLine) {
+        initFirebase();
+      }
+    };
+
+    // --- TEMA YÖNETİMİ ---
+    window.setTheme = function(theme) {
+      document.body.setAttribute('data-theme', theme);
+      const themeBtn = document.getElementById('themeBtn');
+      if (theme === 'light') {
+        themeBtn.innerText = '☀️ Light';
+      } else {
+        themeBtn.innerText = '🌙 Dark';
+      }
+      localStorage.setItem('137_theme', theme);
+    };
+
+    window.toggleTheme = function() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    };
+
+    // --- PANO GEÇİŞLERİ VE YÖNETİMİ ---
+    window.loadBoard = function(boardName) {
+      if (!window.savedBoards[boardName]) return;
+      
+      window.currentBoardName = boardName;
+      window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[boardName]));
+      window.selectedCardIds = [];
+      
+      saveAllToStorage();
+      renderBoardsList();
+      renderCards();
+    };
+
+    window.saveCurrentBoard = function() {
+      const name = prompt('Moodboard için bir isim giriniz:', window.currentBoardName);
+      if (name && name.trim() !== '') {
+        window.currentBoardName = name.trim();
+        window.savedBoards[window.currentBoardName] = JSON.parse(JSON.stringify(window.cardsData));
+        saveAllToStorage();
+        renderBoardsList();
+      }
+    };
+
+    window.deleteBoard = function(boardName, e) {
+      e.stopPropagation();
+      if (confirm(`"${boardName}" panosunu silmek istediğinize emin misiniz?`)) {
+        delete window.savedBoards[boardName];
+        if (window.currentBoardName === boardName) {
+          const remaining = Object.keys(window.savedBoards);
+          if (remaining.length > 0) {
+            window.currentBoardName = remaining[0];
+            window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[window.currentBoardName]));
+          } else {
+            window.currentBoardName = 'Yeni Pano';
+            window.cardsData = [];
+            window.savedBoards[window.currentBoardName] = window.cardsData;
+          }
+        }
+        saveAllToStorage();
+        renderBoardsList();
+        renderCards();
+      }
+    };
+
+    window.renderBoardsList = function() {
+      const listEl = document.getElementById('boardsList');
+      listEl.innerHTML = '';
+
+      Object.keys(window.savedBoards).forEach(boardName => {
+        const item = document.createElement('div');
+        item.className = `board-item ${boardName === window.currentBoardName ? 'active' : ''}`;
+        item.onclick = () => window.loadBoard(boardName);
+        item.innerHTML = `
+          <span class="board-item-name">${boardName}</span>
+          <span class="board-item-del" onclick="window.deleteBoard('${boardName}', event)">✕</span>
+        `;
+        listEl.appendChild(item);
+      });
+    };
+
+    window.toggleSidebar = function() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+    };
+
+    function setupContextMenu() {
+      const board = document.getElementById('board-container');
+      const menu = document.getElementById('context-menu');
+
+      board.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        window.rightClickPos = { x: e.clientX, y: e.clientY };
+
+        menu.style.left = `${e.clientX}px`;
+        menu.style.top = `${e.clientY}px`;
+
+        const groupBtn = document.getElementById('menu-group-btn');
+        const groupDivider = document.getElementById('menu-group-divider');
+
+        if (window.selectedCardIds.length > 1) {
+          groupBtn.style.display = 'block';
+          groupDivider.style.display = 'block';
+
+          const firstGroup = window.cardsData.find(c => c.id === window.selectedCardIds[0])?.groupId;
+          const isAllSameGroup = firstGroup && window.selectedCardIds.every(id => window.cardsData.find(c => c.id === id)?.groupId === firstGroup);
+          
+          groupBtn.innerText = isAllSameGroup ? '🔓 Grubu Çöz' : '🔗 Grupla';
+        } else {
+          groupBtn.style.display = 'none';
+          groupDivider.style.display = 'none';
+        }
+
+        menu.style.display = 'block';
+      });
+
+      document.addEventListener('click', () => {
+        menu.style.display = 'none';
+      });
+    }
+
+    window.contextAddText = function() {
+      const newCard = {
+        id: Date.now(),
+        type: 'text',
+        brand: 'Genel',
+        category: 'text',
+        title: 'Yeni Not...',
+        textColor: document.body.getAttribute('data-theme') === 'light' ? '#1a1d24' : '#ffffff',
+        x: window.rightClickPos.x - 100,
+        y: window.rightClickPos.y - 50,
+        w: 240,
+        h: 160,
+        zIndex: ++window.highestZIndex,
+        groupId: null
+      };
+
+      window.cardsData.push(newCard);
+      saveAllToStorage();
+      renderCards();
+      setTimeout(() => window.editCard(newCard.id), 50);
+    };
+
+    window.contextAddCard = function() {
+      window.openCreateModal();
+    };
+
+    window.contextToggleGroup = function() {
+      if (window.selectedCardIds.length < 2) return;
+
+      const firstGroup = window.cardsData.find(c => c.id === window.selectedCardIds[0])?.groupId;
+      const isAllSameGroup = firstGroup && window.selectedCardIds.every(id => window.cardsData.find(c => c.id === id)?.groupId === firstGroup);
+
+      if (isAllSameGroup) {
+        window.cardsData.forEach(c => {
+          if (window.selectedCardIds.includes(c.id)) c.groupId = null;
+        });
+      } else {
+        const newGroupId = 'group_' + Date.now();
+        window.cardsData.forEach(c => {
+          if (window.selectedCardIds.includes(c.id)) c.groupId = newGroupId;
+        });
+      }
+
+      saveAllToStorage();
+      renderCards();
+    };
+
+    function setupDirectBoardTyping() {
+      document.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+        if (document.getElementById('glassModal').classList.contains('active')) return;
+        if (e.ctrlKey || e.altKey || e.metaKey || e.key === 'Escape' || e.key === 'Tab') return;
+
+        if (e.key.length === 1) {
+          e.preventDefault();
+          
+          const newCard = {
+            id: Date.now(),
+            type: 'text',
+            brand: 'Genel',
+            category: 'text',
+            title: e.key,
+            textColor: document.body.getAttribute('data-theme') === 'light' ? '#1a1d24' : '#ffffff',
+            x: 200 + Math.floor(Math.random() * 80),
+            y: 150 + Math.floor(Math.random() * 80),
+            w: 240,
+            h: 160,
+            zIndex: ++window.highestZIndex,
+            groupId: null
+          };
+
+          window.cardsData.push(newCard);
+          saveAllToStorage();
+          renderCards();
+
+          setTimeout(() => window.editCard(newCard.id), 50);
+        }
+      });
+    }
+
+    document.addEventListener('paste', (e) => {
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+      const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+      if (pastedText && pastedText.trim().startsWith('http')) {
+        e.preventDefault();
+        const url = pastedText.trim();
+        
+        let defaultTitle = 'Pano Fikri';
+        try {
+          const domain = new URL(url).hostname.replace('www.', '');
+          defaultTitle = `${domain.charAt(0).toUpperCase() + domain.slice(1)} Referansı`;
+        } catch(err) {}
+
+        const newCard = {
+          id: Date.now(),
+          type: 'link',
+          brand: 'Hızlı Eklendi',
+          category: 'design',
+          title: defaultTitle,
+          img: getThumbnailUrl(url, ''),
+          url,
+          x: 150 + Math.floor(Math.random() * 60),
+          y: 150 + Math.floor(Math.random() * 60),
+          w: 240,
+          h: 250,
+          zIndex: ++window.highestZIndex,
+          groupId: null
+        };
+
+        window.cardsData.push(newCard);
+        saveAllToStorage();
+        renderCards();
+      }
+    });
+
+    window.renderCards = function() {
+      const container = document.getElementById('board-container');
+      document.querySelectorAll('.card').forEach(el => el.remove());
+
+      window.cardsData.forEach(card => {
+        const cardEl = createCardElement(card);
+        container.appendChild(cardEl);
+      });
+    };
+
+    function getThumbnailUrl(url, manualImg) {
+      if (manualImg && manualImg.trim() !== '') return manualImg;
+      if (url && url.trim() !== '') {
+        return `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`;
+      }
+      return 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500';
+    }
+
+    function createCardElement(data) {
+      const card = document.createElement('div');
+      card.className = `card ${data.type === 'text' ? 'text-card' : ''} ${window.selectedCardIds.includes(data.id) ? 'selected' : ''} ${data.groupId ? 'grouped' : ''}`;
+      card.style.left = `${data.x}px`;
+      card.style.top = `${data.y}px`;
+      card.style.zIndex = data.zIndex || 1;
+      if (data.w) card.style.width = `${data.w}px`;
+      if (data.h) card.style.height = `${data.h}px`;
+      card.dataset.id = data.id;
+
+      const categoryNames = { video: 'Video', design: 'Tasarım', photo: 'Fotoğraf', text: 'Metin' };
+
+      if (data.type === 'text') {
+        const defaultColor = document.body.getAttribute('data-theme') === 'light' ? '#1a1d24' : '#ffffff';
+        card.innerHTML = `
+          <div class="card-top-bar">
+            <span class="card-tag tag-text">METİN</span>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="brand-tag">${data.brand || 'Genel'}</span>
+              <div class="card-delete" onclick="window.deleteCard(${data.id}, event)">✕</div>
+            </div>
+          </div>
+          <div class="card-text-display" style="color: ${data.textColor || defaultColor};">${data.title}</div>
+          <div class="card-actions" style="margin-top: 8px;">
+            <span></span>
+            <button class="card-edit-btn" onclick="window.editCard(${data.id}, event)">Düzenle</button>
+          </div>
+        `;
+      } else {
+        let imgHTML = data.img ? `<div class="card-img-wrapper"><img src="${data.img}" alt="Referans" crossorigin="anonymous" onerror="this.src='https://via.placeholder.com/240x140/12161f/8e9aaf?text=Görsel'"></div>` : '';
+        let linkHTML = data.url ? `<a href="${data.url}" target="_blank" class="card-link">🔗 Referansa Git</a>` : '';
+
+        card.innerHTML = `
+          <div class="card-top-bar">
+            <span class="card-tag tag-${data.category}">${categoryNames[data.category]}</span>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="brand-tag">${data.brand || 'Genel'}</span>
+              <div class="card-delete" onclick="window.deleteCard(${data.id}, event)">✕</div>
+            </div>
+          </div>
+          ${imgHTML}
+          <h4>${data.title}</h4>
+          <div class="card-actions">
+            ${linkHTML}
+            <button class="card-edit-btn" onclick="window.editCard(${data.id}, event)">Düzenle</button>
+          </div>
+        `;
+      }
+
+      makeDraggableAndResizable(card, data.id);
+      return card;
+    }
+
+    window.openCreateModal = function() {
+      document.getElementById('modalCardId').value = '';
+      document.getElementById('modalType').value = 'link';
+      document.getElementById('modalTitle').innerText = 'Yeni Referans Ekle';
+      document.getElementById('modalBrand').value = '';
+      document.getElementById('modalCategory').value = 'design';
+      document.getElementById('modalCardTitle').value = '';
+      document.getElementById('modalTargetUrl').value = '';
+      document.getElementById('modalImageUrl').value = '';
+
+      document.getElementById('modalCategoryGroup').style.display = 'flex';
+      document.getElementById('modalUrlGroup').style.display = 'flex';
+      document.getElementById('modalImageGroup').style.display = 'flex';
+      document.getElementById('modalTextColorGroup').style.display = 'none';
+
+      document.getElementById('glassModal').classList.add('active');
+    };
+
+    window.editCard = function(id, e) {
+      if (e) e.stopPropagation();
+      const cardObj = window.cardsData.find(c => c.id === id);
+      if (!cardObj) return;
+
+      document.getElementById('modalCardId').value = cardObj.id;
+      document.getElementById('modalType').value = cardObj.type;
+      document.getElementById('modalTitle').innerText = cardObj.type === 'text' ? 'Metin Notunu Düzenle' : 'Referans Kartını Düzenle';
+      document.getElementById('modalBrand').value = cardObj.brand || '';
+      document.getElementById('modalCardTitle').value = cardObj.title || '';
+
+      if (cardObj.type === 'text') {
+        document.getElementById('modalCategoryGroup').style.display = 'none';
+        document.getElementById('modalUrlGroup').style.display = 'none';
+        document.getElementById('modalImageGroup').style.display = 'none';
+        document.getElementById('modalTextColorGroup').style.display = 'flex';
+        document.getElementById('modalTextColor').value = cardObj.textColor || (document.body.getAttribute('data-theme') === 'light' ? '#1a1d24' : '#ffffff');
+      } else {
+        document.getElementById('modalCategoryGroup').style.display = 'flex';
+        document.getElementById('modalUrlGroup').style.display = 'flex';
+        document.getElementById('modalImageGroup').style.display = 'flex';
+        document.getElementById('modalTextColorGroup').style.display = 'none';
+        document.getElementById('modalCategory').value = cardObj.category || 'design';
+        document.getElementById('modalTargetUrl').value = cardObj.url || '';
+        document.getElementById('modalImageUrl').value = cardObj.img || '';
+      }
+
+      document.getElementById('glassModal').classList.add('active');
+      document.getElementById('modalCardTitle').focus();
+    };
+
+    window.closeModal = function() {
+      document.getElementById('glassModal').classList.remove('active');
+    };
+
+    window.saveModalData = function() {
+      const id = document.getElementById('modalCardId').value;
+      const type = document.getElementById('modalType').value;
+      const brand = document.getElementById('modalBrand').value || 'Genel';
+      const title = document.getElementById('modalCardTitle').value || 'İsimsiz Fikir';
+
+      if (id) {
+        const cardObj = window.cardsData.find(c => c.id == id);
+        if (cardObj) {
+          cardObj.brand = brand;
+          cardObj.title = title;
+
+          if (type === 'text') {
+            cardObj.textColor = document.getElementById('modalTextColor').value;
+          } else {
+            cardObj.category = document.getElementById('modalCategory').value;
+            cardObj.url = document.getElementById('modalTargetUrl').value;
+            cardObj.img = getThumbnailUrl(cardObj.url, document.getElementById('modalImageUrl').value);
+          }
+        }
+      } else {
+        const category = document.getElementById('modalCategory').value;
+        const url = document.getElementById('modalTargetUrl').value;
+        const manualImg = document.getElementById('modalImageUrl').value;
+
+        const newCard = {
+          id: Date.now(),
+          type: 'link',
+          brand,
+          category,
+          title,
+          img: getThumbnailUrl(url, manualImg),
+          url,
+          x: 120 + Math.floor(Math.random() * 60),
+          y: 120 + Math.floor(Math.random() * 60),
+          w: 240,
+          h: 250,
+          zIndex: ++window.highestZIndex,
+          groupId: null
+        };
+
+        window.cardsData.push(newCard);
+      }
+
+      saveAllToStorage();
+      renderCards();
+      closeModal();
+    };
+
+    window.deleteCard = function(id, e) {
+      e.stopPropagation();
+      window.cardsData = window.cardsData.filter(c => c.id !== id);
+      window.selectedCardIds = window.selectedCardIds.filter(sId => sId !== id);
+      saveAllToStorage();
+      renderCards();
+    };
+
+    window.clearBoard = function() {
+      if (confirm('Mevcut panoyu temizlemek istediğinize emin misiniz?')) {
+        window.cardsData = [];
+        window.selectedCardIds = [];
+        saveAllToStorage();
+        renderCards();
+      }
+    };
+
+    function setupAreaSelection() {
+      const board = document.getElementById('board-container');
+      const selectionBox = document.getElementById('selection-box');
+      let startX, startY, isSelecting = false;
+
+      board.addEventListener('mousedown', (e) => {
+        if (e.target.closest('.card') || e.target.closest('.board-header') || e.button === 2) return;
+
+        isSelecting = true;
+        const rect = board.getBoundingClientRect();
+        startX = e.clientX - rect.left;
+        startY = e.clientY - rect.top;
+
+        selectionBox.style.left = `${startX}px`;
+        selectionBox.style.top = `${startY}px`;
+        selectionBox.style.width = '0px';
+        selectionBox.style.height = '0px';
+        selectionBox.style.display = 'block';
+
+        if (!e.shiftKey) {
+          window.selectedCardIds = [];
+          document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+        }
+
+        function onMouseMove(e) {
+          if (!isSelecting) return;
+          const currentX = e.clientX - rect.left;
+          const currentY = e.clientY - rect.top;
+
+          const width = Math.abs(currentX - startX);
+          const height = Math.abs(currentY - startY);
+          const left = Math.min(currentX, startX);
+          const top = Math.min(currentY, startY);
+
+          selectionBox.style.width = `${width}px`;
+          selectionBox.style.height = `${height}px`;
+          selectionBox.style.left = `${left}px`;
+          selectionBox.style.top = `${top}px`;
+
+          window.cardsData.forEach(card => {
+            const cardRight = card.x + (card.w || 240);
+            const cardBottom = card.y + (card.h || 200);
+
+            const isIntersecting = !(
+              card.x > left + width ||
+              cardRight < left ||
+              card.y > top + height ||
+              cardBottom < top
+            );
+
+            const cardEl = document.querySelector(`.card[data-id="${card.id}"]`);
+            if (isIntersecting) {
+              if (!window.selectedCardIds.includes(card.id)) window.selectedCardIds.push(card.id);
+              if (cardEl) cardEl.classList.add('selected');
+            } else if (!e.shiftKey) {
+              window.selectedCardIds = window.selectedCardIds.filter(id => id !== card.id);
+              if (cardEl) cardEl.classList.remove('selected');
+            }
+          });
+        }
+
+        function onMouseUp() {
+          if (isSelecting) {
+            isSelecting = false;
+            selectionBox.style.display = 'none';
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+          }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+    }
+
+    function makeDraggableAndResizable(element, id) {
+      let isDragging = false;
+      let startX, startY;
+      let initialPositions = [];
+
+      element.addEventListener('mousedown', (e) => {
+        if (e.button === 2) return;
+
+        if (
+          e.target.tagName === 'A' || 
+          e.target.tagName === 'TEXTAREA' ||
+          e.target.tagName === 'INPUT' ||
+          e.target.classList.contains('card-delete') || 
+          e.target.classList.contains('card-edit-btn')
+        ) {
+          return;
+        }
+
+        const clickedCardObj = window.cardsData.find(c => c.id === id);
+        if (clickedCardObj) {
+          window.highestZIndex++;
+          clickedCardObj.zIndex = window.highestZIndex;
+          element.style.zIndex = window.highestZIndex;
+
+          if (clickedCardObj.groupId) {
+            window.cardsData.filter(c => c.groupId === clickedCardObj.groupId).forEach(groupCard => {
+              groupCard.zIndex = ++window.highestZIndex;
+              const gEl = document.querySelector(`.card[data-id="${groupCard.id}"]`);
+              if (gEl) gEl.style.zIndex = groupCard.zIndex;
+            });
+          }
+        }
+
+        if (clickedCardObj.groupId) {
+          const groupMemberIds = window.cardsData.filter(c => c.groupId === clickedCardObj.groupId).map(c => c.id);
+          if (!e.shiftKey) window.selectedCardIds = [];
+          groupMemberIds.forEach(gId => {
+            if (!window.selectedCardIds.includes(gId)) window.selectedCardIds.push(gId);
+          });
+          document.querySelectorAll('.card').forEach(c => {
+            if (window.selectedCardIds.includes(parseInt(c.dataset.id))) c.classList.add('selected');
+          });
+        } else {
+          if (!window.selectedCardIds.includes(id)) {
+            if (!e.shiftKey) {
+              window.selectedCardIds = [id];
+              document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            } else {
+              window.selectedCardIds.push(id);
+            }
+            element.classList.add('selected');
+          }
+        }
+
+        const rect = element.getBoundingClientRect();
+        if (e.clientX > rect.right - 16 && e.clientY > rect.bottom - 16) {
+          return; 
+        }
+
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        initialPositions = window.selectedCardIds.map(sId => {
+          const cardObj = window.cardsData.find(c => c.id === sId);
+          const cardEl = document.querySelector(`.card[data-id="${sId}"]`);
+          return {
+            id: sId,
+            obj: cardObj,
+            el: cardEl,
+            startX: cardObj ? cardObj.x : 0,
+            startY: cardObj ? cardObj.y : 0
+          };
+        });
+
+        function onMouseMove(e) {
+          if (!isDragging) return;
+          e.preventDefault();
+
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+
+          initialPositions.forEach(item => {
+            if (item.obj && item.el) {
+              const newX = item.startX + dx;
+              const newY = item.startY + dy;
+
+              item.el.style.left = `${newX}px`;
+              item.el.style.top = `${newY}px`;
+
+              item.obj.x = newX;
+              item.obj.y = newY;
+            }
+          });
+        }
+
+        function onMouseUp() {
+          if (isDragging) {
+            isDragging = false;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+
+            saveAllToStorage();
+          }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+
+      const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+          const cardObj = window.cardsData.find(c => c.id === id);
+          if (cardObj) {
+            cardObj.w = entry.contentRect.width + 28;
+            cardObj.h = entry.contentRect.height + 28;
+            saveAllToStorage();
+          }
+        }
+      });
+
+      resizeObserver.observe(element);
+    }
+  </script>
+</body>
+</html>
