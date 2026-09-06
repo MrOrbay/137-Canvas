@@ -3,445 +3,262 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Moodboard — 137 STUDIO</title>
+  <title>Moodboard — 137 CANVAS</title>
   <!-- Montserrat Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- html2pdf.js (Tıklanabilir PDF Aktarımı İçin) -->
+  <!-- html2pdf.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   
   <style>
     :root {
       --primary-blue: #0022FF;
       --glow-blue: rgba(0, 34, 255, 0.4);
-      --bg-dark: #0a0c10;
-      --panel-bg: rgba(18, 22, 31, 0.85);
-      --card-bg: rgba(20, 24, 33, 0.85);
+      --bg-dark: #05070c;
+      --panel-bg: rgba(10, 14, 23, 0.75);
+      --card-bg: rgba(15, 20, 32, 0.75);
       --border-color: rgba(255, 255, 255, 0.12);
-      --text-white: #ffffff;
+      --text-main: #ffffff;
       --text-muted: #8e9aaf;
-      --board-bg: #0b0d12;
-      --grid-line-1: rgba(255, 255, 255, 0.07);
-      --grid-line-2: rgba(0, 34, 255, 0.05);
-      --context-bg: rgba(20, 24, 33, 0.95);
-      --modal-bg: rgba(20, 24, 33, 0.9);
+      --board-bg: #04060a;
+      --dot-color: rgba(255, 255, 255, 0.18);
+      --context-bg: rgba(15, 20, 32, 0.95);
+      --modal-bg: rgba(15, 20, 32, 0.95);
       --input-bg: rgba(255, 255, 255, 0.05);
     }
 
     [data-theme="light"] {
       --primary-blue: #0044FF;
       --glow-blue: rgba(0, 68, 255, 0.25);
-      --bg-dark: #f0f2f5;
-      --panel-bg: rgba(255, 255, 255, 0.9);
-      --card-bg: rgba(255, 255, 255, 0.9);
+      --bg-dark: #eef2f7;
+      --panel-bg: rgba(255, 255, 255, 0.85);
+      --card-bg: rgba(255, 255, 255, 0.85);
       --border-color: rgba(0, 0, 0, 0.12);
-      --text-white: #1a1d24;
+      --text-main: #1e293b;
       --text-muted: #64748b;
-      --board-bg: #e5e7eb;
-      --grid-line-1: rgba(0, 0, 0, 0.06);
-      --grid-line-2: rgba(0, 68, 255, 0.04);
+      --board-bg: #e2e8f0;
+      --dot-color: rgba(0, 0, 0, 0.18);
       --context-bg: rgba(255, 255, 255, 0.98);
-      --modal-bg: rgba(255, 255, 255, 0.95);
+      --modal-bg: rgba(255, 255, 255, 0.98);
       --input-bg: rgba(0, 0, 0, 0.04);
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: 'Montserrat', sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
     html, body {
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       overflow: hidden;
       background-color: var(--bg-dark);
-      color: var(--text-white);
+      color: var(--text-main);
       user-select: none;
     }
 
-    body {
-      display: flex;
-    }
+    body { display: flex; }
 
-    /* SIDEBAR ERGONOMİK YAPISI */
+    /* SIDEBAR */
     #sidebar {
-      width: 320px;
-      min-width: 320px;
-      height: 100vh;
-      background: var(--panel-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-right: 1px solid var(--border-color);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      z-index: 100;
-      box-shadow: 10px 0 30px rgba(0,0,0,0.1);
-      overflow-y: auto;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 320px; min-width: 320px; height: 100vh;
+      background: var(--panel-bg); backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px); border-right: 1px solid var(--border-color);
+      padding: 20px; display: flex; flex-direction: column; z-index: 100;
+      box-shadow: 10px 0 30px rgba(0,0,0,0.2); transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
 
-    #sidebar::-webkit-scrollbar {
-      width: 4px;
-    }
-    #sidebar::-webkit-scrollbar-thumb {
-      background: var(--border-color);
-      border-radius: 4px;
-    }
-
-    @media (max-width: 768px) {
-      #sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        z-index: 1000;
-        transform: translateX(-100%);
-        width: 280px;
-        min-width: 280px;
-      }
-
-      #sidebar.active {
-        transform: translateX(0);
-      }
-    }
+    #sidebar.collapsed { margin-left: -320px; }
 
     .sidebar-toggle-btn {
-      position: absolute;
-      top: 20px;
-      right: -40px;
-      width: 36px;
-      height: 36px;
-      background: var(--primary-blue);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 1001;
-      box-shadow: 0 4px 15px var(--glow-blue);
+      position: absolute; top: 20px; right: -40px; width: 36px; height: 36px;
+      background: var(--primary-blue); border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 1001; box-shadow: 0 4px 15px var(--glow-blue); transition: transform 0.3s ease;
     }
 
-    .brand-section {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    #sidebar.collapsed .sidebar-toggle-btn { transform: rotate(180deg); }
+
+    .brand-section { display: flex; flex-direction: column; gap: 14px; flex: 1; overflow: hidden; }
 
     .brand-logo h1 {
-      font-weight: 800;
-      font-size: 1.4rem;
-      color: var(--text-white);
+      font-weight: 800; font-size: 1.5rem; color: var(--text-main);
+      text-shadow: 0 0 15px var(--glow-blue), 0 0 30px var(--glow-blue); letter-spacing: -0.5px;
     }
 
-    .brand-badge {
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--primary-blue);
-      text-transform: uppercase;
-      background: rgba(0, 34, 255, 0.12);
-      border: 1px solid rgba(0, 34, 255, 0.3);
-      padding: 3px 8px;
-      border-radius: 20px;
-      width: fit-content;
-    }
-
-    .theme-toggle-container {
+    .sidebar-bottom {
+      margin-top: auto;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--input-bg);
-      border: 1px solid var(--border-color);
-      padding: 8px 12px;
-      border-radius: 8px;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .theme-switch-btn {
-      background: var(--primary-blue);
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 0.7rem;
+    .theme-toggle-container, .lang-toggle-container {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--input-bg); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px;
+    }
+
+    .theme-switch-btn, .lang-switch-btn {
+      background: var(--primary-blue); color: #fff; border: none; padding: 5px 10px;
+      border-radius: 6px; font-size: 0.7rem; font-weight: 700; cursor: pointer;
+    }
+
+    .agency-footer-text {
+      font-size: 0.55rem;
       font-weight: 700;
-      cursor: pointer;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      opacity: 0.6;
+      text-transform: uppercase;
+      text-align: center;
+      padding-top: 4px;
     }
 
     .btn-add {
-      width: 100%;
-      padding: 12px;
-      background: var(--primary-blue);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 4px 15px var(--glow-blue);
+      width: 100%; padding: 12px; background: var(--primary-blue); color: #fff; border: none;
+      border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      cursor: pointer; box-shadow: 0 4px 15px var(--glow-blue);
     }
 
     .boards-depot {
-      margin-top: 15px;
-      border-top: 1px solid var(--border-color);
-      padding-top: 14px;
+      margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 14px;
+      flex: 1; display: flex; flex-direction: column; overflow: hidden; margin-bottom: 14px;
     }
 
-    .boards-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      max-height: 160px;
-      overflow-y: auto;
-    }
+    .boards-list { display: flex; flex-direction: column; gap: 8px; flex: 1; overflow-y: auto; padding-right: 4px; }
+    .boards-list::-webkit-scrollbar { width: 5px; }
+    .boards-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
 
     .board-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      background: var(--input-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 0.75rem;
-      cursor: pointer;
+      padding: 10px 12px; background: var(--input-bg); border: 1px solid var(--border-color);
+      border-radius: 8px; font-size: 0.75rem; cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; color: var(--text-main); transition: background 0.2s ease, border-color 0.2s ease;
     }
 
-    .board-item.active {
-      background: var(--primary-blue) !important;
-      color: #fff !important;
-    }
+    .board-item:hover { border-color: var(--primary-blue); }
+    .board-item.active { background: var(--primary-blue) !important; color: #fff !important; border-color: var(--primary-blue) !important; box-shadow: 0 0 12px var(--glow-blue); }
 
-    /* PANO (BOARD) */
+    .board-item-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+    .board-item-input { background: transparent; border: none; color: inherit; font-weight: 600; font-size: 0.75rem; width: 100%; outline: none; }
+
+    .board-delete-btn {
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; opacity: 0.6; transition: opacity 0.2s, background 0.2s; margin-left: 6px;
+    }
+    .board-delete-btn:hover { opacity: 1; background: rgba(255, 71, 87, 0.25); color: #ff4757; }
+
+    /* GRADIENT PANO BACKGROUND */
     #board-container {
-      flex: 1;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
+      flex: 1; height: 100vh; position: relative; overflow: hidden;
+      touch-action: none; cursor: default;
       background-color: var(--board-bg);
       background-image: 
-        linear-gradient(var(--grid-line-1) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line-1) 1px, transparent 1px);
-      background-size: 25px 25px;
-      touch-action: none;
+        radial-gradient(var(--dot-color) 1.2px, transparent 1.2px),
+        radial-gradient(circle at 80% 20%, rgba(0, 34, 255, 0.35) 0%, rgba(0, 102, 255, 0.15) 35%, transparent 70%),
+        radial-gradient(circle at 10% 90%, rgba(0, 34, 255, 0.15) 0%, transparent 50%);
+      background-size: 24px 24px, 100% 100%, 100% 100%;
     }
+
+    [data-theme="light"] #board-container {
+      background-image: 
+        radial-gradient(var(--dot-color) 1.2px, transparent 1.2px),
+        radial-gradient(circle at 80% 20%, rgba(0, 68, 255, 0.2) 0%, rgba(59, 130, 246, 0.1) 35%, transparent 70%),
+        radial-gradient(circle at 10% 90%, rgba(0, 68, 255, 0.08) 0%, transparent 50%);
+    }
+
+    #board-viewport { width: 100%; height: 100%; position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+    #selection-box { position: absolute; border: 1px dashed var(--primary-blue); background: rgba(0, 34, 255, 0.15); pointer-events: none; z-index: 999; display: none; }
+
+    .active-board-title {
+      position: absolute; top: 15px; left: 55px; z-index: 50; background: var(--panel-bg); backdrop-filter: blur(15px);
+      padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); font-size: 0.8rem;
+      font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 6px; cursor: pointer;
+    }
+
+    .board-title-editable { outline: none; border-bottom: 1px dashed transparent; padding: 2px 4px; border-radius: 4px; }
+    .board-title-editable:focus { border-bottom-color: var(--primary-blue); background: var(--input-bg); }
 
     .board-header {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      z-index: 50;
-      background: var(--panel-bg);
-      backdrop-filter: blur(10px);
-      padding: 8px 16px;
-      border-radius: 20px;
+      position: absolute; top: 15px; right: 15px; display: flex; align-items: center; gap: 15px; z-index: 50;
+      background: var(--panel-bg); backdrop-filter: blur(15px); padding: 8px 16px; border-radius: 20px;
       border: 1px solid var(--border-color);
     }
 
-    .text-link-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: underline;
-    }
+    .text-link-btn { background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-decoration: underline; display: flex; align-items: center; gap: 4px; }
 
-    .text-link-btn:hover {
-      color: var(--text-white);
-    }
-
-    /* KART / KATMAN YAPISI */
+    /* KART & METİN STİLLERİ */
     .card {
-      position: absolute;
-      min-width: 180px;
-      min-height: 120px;
-      background: var(--card-bg);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      cursor: grab;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      touch-action: none;
+      position: absolute; min-width: 180px; min-height: 120px; background: var(--card-bg); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 12px;
+      padding: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); cursor: grab; display: flex; flex-direction: column;
+      justify-content: space-between; touch-action: none; color: var(--text-main);
     }
 
-    .card.grouped {
-      box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.4), 0 0 10px var(--glow-blue);
-      border-color: rgba(0, 34, 255, 0.5) !important;
-    }
+    .card.grouped, .canvas-text-element.grouped { box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.4), 0 0 10px var(--glow-blue); border-color: rgba(0, 34, 255, 0.5) !important; }
+    .card.selected, .canvas-text-element.selected { border-color: var(--primary-blue) !important; box-shadow: 0 0 20px var(--glow-blue) !important; }
 
-    .card.selected {
-      border-color: var(--primary-blue) !important;
-      box-shadow: 0 0 20px var(--glow-blue) !important;
-    }
+    .resizer { width: 16px; height: 16px; position: absolute; right: 0; bottom: 0; cursor: nwse-resize; z-index: 10; touch-action: none; }
+    .resizer::after { content: ''; position: absolute; right: 4px; bottom: 4px; width: 6px; height: 6px; border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); }
 
-    .resizer {
-      width: 16px;
-      height: 16px;
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      cursor: nwse-resize;
-      z-index: 10;
-      touch-action: none;
-    }
-
-    .resizer::after {
-      content: '';
-      position: absolute;
-      right: 4px;
-      bottom: 4px;
-      width: 6px;
-      height: 6px;
-      border-right: 2px solid var(--text-muted);
-      border-bottom: 2px solid var(--text-muted);
-    }
-
-    .card-top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .card-tag {
-      font-size: 0.55rem;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
-
+    .card-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .card-tag { font-size: 0.55rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
     .tag-video { background: rgba(255, 71, 87, 0.15); color: #ff4757; }
     .tag-design { background: rgba(46, 213, 115, 0.15); color: #2ed573; }
     .tag-photo { background: rgba(30, 144, 255, 0.15); color: #1e90ff; }
-    .tag-text { background: rgba(128, 128, 128, 0.15); color: var(--text-white); }
 
-    .brand-tag {
-      font-size: 0.55rem;
-      font-weight: 700;
-      color: var(--text-white);
-      background: var(--input-bg);
-      padding: 2px 5px;
-      border-radius: 4px;
-      border: 1px solid var(--border-color);
-    }
-
-    .card-img-wrapper {
-      flex: 1;
-      width: 100%;
-      min-height: 70px;
-      border-radius: 6px;
-      overflow: hidden;
-      margin-bottom: 6px;
-      background: var(--input-bg);
-      pointer-events: none;
-    }
-
-    .card-img-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .card h4 {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-white);
-      margin-bottom: 4px;
-      pointer-events: none;
-    }
-
-    .card-link {
-      font-size: 0.65rem;
-      color: var(--primary-blue);
-      text-decoration: underline;
-      margin-top: 2px;
-      display: inline-block;
-      pointer-events: auto;
-    }
-
+    .brand-tag { font-size: 0.55rem; font-weight: 700; color: var(--text-main); background: var(--input-bg); padding: 2px 5px; border-radius: 4px; border: 1px solid var(--border-color); }
+    .card-img-wrapper { flex: 1; width: 100%; min-height: 70px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; background: var(--input-bg); pointer-events: none; }
+    .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    .card h4 { font-size: 0.8rem; font-weight: 600; color: var(--text-main); margin-bottom: 4px; pointer-events: none; white-space: pre-wrap; word-break: break-word; }
+    .card-link { font-size: 0.65rem; color: var(--primary-blue); text-decoration: underline; margin-top: 2px; display: inline-block; pointer-events: auto; }
+    
     .card-delete {
-      width: 18px;
-      height: 18px;
-      background: var(--input-bg);
-      border-radius: 50%;
-      color: var(--text-muted);
-      font-size: 0.6rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      pointer-events: auto;
+      width: 18px; height: 18px; background: var(--input-bg); border-radius: 50%; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto;
+      transition: background 0.2s, color 0.2s;
     }
+    .card-delete:hover { background: rgba(255, 71, 87, 0.2); color: #ff4757; }
+
+    .canvas-text-element {
+      position: absolute; min-width: 80px; min-height: 35px; padding: 6px 12px; border-radius: 6px; cursor: grab;
+      touch-action: none; color: var(--text-main); border: 1px dashed transparent; transition: border-color 0.2s, background 0.2s;
+      display: inline-flex; align-items: center; gap: 8px; font-weight: 600; white-space: pre-wrap; word-break: break-word;
+    }
+    .canvas-text-element:hover { border-color: var(--border-color); background: var(--input-bg); }
+
+    .canvas-text-delete {
+      width: 16px; height: 16px; background: rgba(255, 71, 87, 0.2); color: #ff4757; border-radius: 50%;
+      display: none; align-items: center; justify-content: center; cursor: pointer; position: absolute; top: -8px; right: -8px;
+    }
+    .canvas-text-element:hover .canvas-text-delete { display: flex; }
 
     /* MODAL */
     .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-      z-index: 2000;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.2s ease;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(15px);
+      z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
     }
 
-    .modal-overlay.active {
-      opacity: 1; pointer-events: auto;
-    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .glass-modal { width: 90%; max-width: 440px; background: var(--modal-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px; color: var(--text-main); }
+    .glass-modal input, .glass-modal select, .glass-modal textarea { padding: 8px; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 6px; font-size: 0.8rem; outline: none; }
 
-    .glass-modal {
-      width: 90%; max-width: 400px;
-      background: var(--modal-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 20px;
-      display: flex; flex-direction: column; gap: 12px;
-    }
+    .group-items-preview { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; margin-top: 8px; }
+    .group-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.75rem; }
 
-    /* CONTEXT MENU */
+    /* MINIMAL CONTEXT MENU */
     #context-menu {
-      position: absolute;
-      z-index: 3000;
-      width: 180px;
-      background: var(--context-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 6px 0;
-      display: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      position: absolute; z-index: 3000; width: 160px; background: var(--context-bg);
+      border: 1px solid var(--border-color); border-radius: 8px; padding: 4px 0; display: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px);
     }
-
     .context-menu-item {
-      padding: 8px 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-white);
-      cursor: pointer;
+      padding: 8px 14px; font-size: 0.72rem; font-weight: 500; color: var(--text-main);
+      cursor: pointer; transition: background 0.15s ease;
     }
-
-    .context-menu-item:hover {
-      background: var(--primary-blue);
-    }
+    .context-menu-item:hover { background: var(--primary-blue); color: #fff; }
   </style>
 </head>
 <body data-theme="dark">
@@ -450,74 +267,114 @@
   <aside id="sidebar">
     <button class="sidebar-toggle-btn" onclick="toggleSidebar()">◀</button>
     <div class="brand-section">
-      <div>
-        <div class="brand-badge">Creative Canvas</div>
-        <div class="brand-logo" style="margin-top: 4px;">
-          <h1>137studio</h1>
-        </div>
+      <div class="brand-logo">
+        <h1>137canvas</h1>
       </div>
 
-      <div class="theme-toggle-container">
-        <span style="font-size: 0.7rem; font-weight:700;">Görünüm Modu</span>
-        <button class="theme-switch-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
-      </div>
-
-      <button class="btn-add" onclick="openCreateModal()">+ Yeni Referans Ekle</button>
+      <button class="btn-add" id="lblAddRef" onclick="openCreateModal()">+ Yeni Referans Ekle</button>
 
       <div class="boards-depot">
         <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-          <span style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">MOODBOARDLAR</span>
-          <button class="text-link-btn" onclick="saveCurrentBoard()">+ Kaydet</button>
+          <span style="font-size:0.65rem; color:var(--text-muted); font-weight:700;" id="lblMoodboards">MOODBOARDLAR</span>
+          <button class="text-link-btn" id="lblNewBoard" onclick="saveCurrentBoard()">+ Yeni Pano</button>
         </div>
         <div class="boards-list" id="boardsList"></div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="theme-toggle-container">
+          <span style="font-size: 0.7rem; font-weight:700;" id="lblViewMode">Görünüm Modu</span>
+          <button class="theme-switch-btn" id="themeBtn" onclick="toggleTheme()">Dark</button>
+        </div>
+
+        <div class="lang-toggle-container">
+          <span style="font-size: 0.7rem; font-weight:700;" id="lblLanguage">Dil / Language</span>
+          <button class="lang-switch-btn" id="langBtn" onclick="toggleLanguage()">TR</button>
+        </div>
+
+        <div class="agency-footer-text">
+          DESIGNED & MANAGED BY 137 STUDIO
+        </div>
       </div>
     </div>
   </aside>
 
   <!-- PANO / BOARD -->
   <main id="board-container">
+    <div class="active-board-title" title="Çift tıklayarak ismi değiştirin">
+      <span style="opacity:0.6;">Canvas:</span>
+      <span id="currentBoardTitleDisplay" class="board-title-editable">Varsayılan Pano 1</span>
+    </div>
+
     <div class="board-header">
-      <a href="https://mrorbay.github.io/137-Studio-s-takip/" class="text-link-btn" style="text-decoration:none;">İş Takibine Dön</a>
-      <button class="text-link-btn" onclick="downloadPDF()">📄 PDF İndir</button>
-      <button class="text-link-btn" onclick="clearBoard()">Panoyu Temizle</button>
+      <a href="https://mrorbay.github.io/137-Studio-s-takip/" class="text-link-btn" id="lblBackToTask" style="text-decoration:none;">İş Takibine Dön</a>
+      <button class="text-link-btn" onclick="resetZoom()" id="zoomDisplayBtn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        %100
+      </button>
+      <button class="text-link-btn" id="lblDownloadPdf" onclick="downloadPDF()">PDF İndir</button>
+      <button class="text-link-btn" id="lblClearBoard" onclick="clearBoard()">Panoyu Temizle</button>
+    </div>
+
+    <div id="board-viewport">
+      <div id="selection-box"></div>
     </div>
   </main>
 
-  <!-- SAĞ TIK / MOBİL MENÜ -->
+  <!-- SAĞ TIK MINIMAL MENÜ -->
   <div id="context-menu">
-    <div class="context-menu-item" onclick="contextAddText()">📝 Metin Ekle</div>
-    <div class="context-menu-item" onclick="contextAddCard()">🖼️ Kart Ekle</div>
-    <div class="context-menu-item" id="menu-group-btn" style="display:none;" onclick="contextToggleGroup()">📁 Klasör Gibi Grupla</div>
+    <div class="context-menu-item" id="menu-edit-btn" style="display:none;" onclick="contextEditItem()">Düzenle</div>
+    <div class="context-menu-item" id="menu-group-preview-btn" style="display:none;" onclick="contextOpenGroupPreview()">Grup İçeriğini Gör</div>
+    <div class="context-menu-item" id="ctxAddText" onclick="contextAddText()">Metin Ekle</div>
+    <div class="context-menu-item" id="ctxAddCard" onclick="contextAddCard()">Kart Ekle</div>
+    <div class="context-menu-item" id="menu-group-btn" style="display:none;" onclick="contextToggleGroup()">Grupla / Çöz</div>
   </div>
 
-  <!-- MODAL -->
+  <!-- DÜZENLEME MODALI -->
   <div class="modal-overlay" id="glassModal">
     <div class="glass-modal">
-      <h3 style="font-size:0.9rem;" id="modalTitle">Kart Oluştur / Düzenle</h3>
+      <h3 style="font-size:0.9rem;" id="modalTitle">Öğe Düzenle</h3>
       <input type="hidden" id="modalCardId">
-      <input type="hidden" id="modalType" value="link">
 
-      <input type="text" id="modalBrand" placeholder="Marka (Örn: Coffeetainer)" style="padding:8px; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:6px;">
+      <div id="brandCategoryGroup">
+        <input type="text" id="modalBrand" placeholder="Marka (Örn: Coffeetainer)" style="width:100%; margin-bottom:8px;">
+        <select id="modalCategory" style="width:100%; margin-bottom:8px;">
+          <option value="video" id="optVideo">Video Fikri</option>
+          <option value="design" id="optDesign">Tasarım Fikri</option>
+          <option value="photo" id="optPhoto">Fotoğraf Fikri</option>
+        </select>
+      </div>
+
+      <textarea id="modalCardTitle" rows="3" placeholder="Fikir Başlığı / Metin Notu"></textarea>
       
-      <select id="modalCategory" style="padding:8px; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:6px;">
-        <option value="video">Video Fikri</option>
-        <option value="design">Tasarım Fikri</option>
-        <option value="photo">Fotoğraf Fikri</option>
-      </select>
+      <div id="urlInputsGroup">
+        <input type="text" id="modalTargetUrl" placeholder="Link URL (https...)" style="width:100%; margin-top:8px;">
+        <input type="text" id="modalImageUrl" placeholder="Görsel URL (Boşsa otomatiktir)" style="width:100%; margin-top:8px;">
+      </div>
 
-      <textarea id="modalCardTitle" rows="3" placeholder="Fikir Başlığı / Metin Notu" style="padding:8px; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:6px;"></textarea>
-      
-      <input type="text" id="modalTargetUrl" placeholder="Link URL (https://...)" style="padding:8px; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:6px;">
-      <input type="text" id="modalImageUrl" placeholder="Görsel URL (Boşsa otomatiktir)" style="padding:8px; background:var(--input-bg); border:1px solid var(--border-color); color:#fff; border-radius:6px;">
-
-      <div style="display:flex; justify-content:flex-end; gap:8px;">
-        <button onclick="closeModal()" style="padding:8px 12px; background:none; border:none; color:var(--text-muted); font-size:0.75rem;">İptal</button>
-        <button onclick="saveModalData()" style="padding:8px 12px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700;">Kaydet</button>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+        <button onclick="closeModal()" id="btnModalCancel" style="padding:8px 12px; background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer;">İptal</button>
+        <button onclick="saveModalData()" id="btnModalSave" style="padding:8px 12px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Kaydet</button>
       </div>
     </div>
   </div>
 
-  <!-- HYBRID FIREBASE ENGINE & HYBRID EVENT HANDLING -->
+  <!-- GRUP İÇERİK MODALI -->
+  <div class="modal-overlay" id="groupModal">
+    <div class="glass-modal">
+      <h3 style="font-size:0.9rem;" id="lblGroupTitle">Grup İçeriği</h3>
+      <p style="font-size:0.7rem; color:var(--text-muted);" id="lblGroupDesc">Bu gruptaki ögeler aşağıda listelenmiştir:</p>
+      
+      <div class="group-items-preview" id="groupItemsPreview"></div>
+
+      <div style="display:flex; justify-content:space-between; margin-top:8px;">
+        <button onclick="ungroupCurrentModalGroup()" id="btnUngroup" style="padding:8px 12px; background:rgba(255,71,87,0.2); color:#ff4757; border:none; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Grubu Dağıt</button>
+        <button onclick="closeGroupModal()" id="btnCloseGroup" style="padding:8px 12px; background:var(--primary-blue); border:none; color:#fff; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE ENGINE & AUTO-SAVE & ZOOM MECHANISM -->
   <script type="module">
     let db = null, setRef = null, dbRef = null;
 
@@ -537,8 +394,7 @@
         const { getDatabase, ref, set, onValue } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js");
 
         const app = initializeApp(firebaseConfig);
-        db = getDatabase(app);
-        setRef = set; dbRef = ref;
+        db = getDatabase(app); setRef = set; dbRef = ref;
 
         onValue(ref(db, 'boards'), (snapshot) => {
           const data = snapshot.val();
@@ -546,26 +402,227 @@
             window.savedBoards = data;
             localStorage.setItem('137_saved_boards', JSON.stringify(window.savedBoards));
             if (!window.savedBoards[window.currentBoardName]) {
-              window.currentBoardName = Object.keys(window.savedBoards)[0] || 'Varsayılan Pano';
+              window.currentBoardName = Object.keys(window.savedBoards)[0] || getNextDefaultBoardName();
             }
             window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[window.currentBoardName] || []));
             renderBoardsList();
             renderCards();
+            updateBoardTitleDisplay();
           }
         });
-      } catch (err) {
-        console.warn("Offline moddasınız.");
-      }
+      } catch (err) { console.warn("Offline moddasınız."); }
     }
 
+    window.addEventListener('beforeunload', () => { window.autoSave(); });
+
     window.savedBoards = JSON.parse(localStorage.getItem('137_saved_boards')) || {};
-    window.currentBoardName = localStorage.getItem('137_active_board_name') || 'Varsayılan Pano';
+    window.currentBoardName = localStorage.getItem('137_active_board_name') || 'Varsayılan Pano 1';
+    window.currentLang = localStorage.getItem('137_lang') || 'TR';
     window.cardsData = [];
     window.selectedCardIds = [];
     window.highestZIndex = 10;
     window.rightClickPos = { x: 100, y: 100 };
+    window.targetCardForContext = null;
+    window.activeModalGroupId = null;
 
-    window.saveAllToStorage = function() {
+    window.zoomScale = 1;
+    window.panX = 0;
+    window.panY = 0;
+
+    const closeSvg = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+
+    const dict = {
+      TR: {
+        addRef: "+ Yeni Referans Ekle",
+        moodboards: "MOODBOARDLAR",
+        newBoard: "+ Yeni Pano",
+        viewMode: "Görünüm Modu",
+        language: "Dil / Language",
+        backToTask: "İş Takibine Dön",
+        downloadPdf: "PDF İndir",
+        clearBoard: "Panoyu Temizle",
+        ctxEdit: "Düzenle",
+        ctxGroupPreview: "Grup İçeriğini Gör",
+        ctxAddText: "Metin Ekle",
+        ctxAddCard: "Kart Ekle",
+        ctxGroup: "Grupla / Çöz",
+        optVideo: "Video Fikri",
+        optDesign: "Tasarım Fikri",
+        optPhoto: "Fotoğraf Fikri",
+        modalBrandPh: "Marka (Örn: Coffeetainer)",
+        modalTitlePh: "Fikir Başlığı / Metin Notu",
+        modalUrlPh: "Link URL (https...)",
+        modalImgPh: "Görsel URL (Boşsa otomatiktir)",
+        btnCancel: "İptal",
+        btnSave: "Kaydet",
+        groupTitle: "Grup İçeriği",
+        groupDesc: "Bu gruptaki ögeler aşağıda listelenmiştir:",
+        btnUngroup: "Grubu Dağıt",
+        btnClose: "Kapat",
+        btnGoLink: "Bağlantıya Git",
+        defaultText: "Buraya yazın...",
+        general: "Genel"
+      },
+      EN: {
+        addRef: "+ Add New Reference",
+        moodboards: "MOODBOARDS",
+        newBoard: "+ New Board",
+        viewMode: "View Mode",
+        language: "Language / Dil",
+        backToTask: "Back to Tasks",
+        downloadPdf: "Download PDF",
+        clearBoard: "Clear Board",
+        ctxEdit: "Edit",
+        ctxGroupPreview: "View Group Content",
+        ctxAddText: "Add Text",
+        ctxAddCard: "Add Card",
+        ctxGroup: "Group / Ungroup",
+        optVideo: "Video Idea",
+        optDesign: "Design Idea",
+        optPhoto: "Photo Idea",
+        modalBrandPh: "Brand (e.g. Coffeetainer)",
+        modalTitlePh: "Idea Title / Text Note",
+        modalUrlPh: "Link URL (https...)",
+        modalImgPh: "Image URL (Auto if empty)",
+        btnCancel: "Cancel",
+        btnSave: "Save",
+        groupTitle: "Group Content",
+        groupDesc: "Items in this group are listed below:",
+        btnUngroup: "Ungroup",
+        btnClose: "Close",
+        btnGoLink: "Open Link",
+        defaultText: "Type here...",
+        general: "General"
+      }
+    };
+
+    function applyLanguage() {
+      const l = dict[window.currentLang];
+      document.getElementById('lblAddRef').innerText = l.addRef;
+      document.getElementById('lblMoodboards').innerText = l.moodboards;
+      document.getElementById('lblNewBoard').innerText = l.newBoard;
+      document.getElementById('lblViewMode').innerText = l.viewMode;
+      document.getElementById('lblLanguage').innerText = l.language;
+      document.getElementById('lblBackToTask').innerText = l.backToTask;
+      document.getElementById('lblDownloadPdf').innerText = l.downloadPdf;
+      document.getElementById('lblClearBoard').innerText = l.clearBoard;
+
+      document.getElementById('ctxAddText').innerText = l.ctxAddText;
+      document.getElementById('ctxAddCard').innerText = l.ctxAddCard;
+      document.getElementById('menu-edit-btn').innerText = l.ctxEdit;
+      document.getElementById('menu-group-preview-btn').innerText = l.ctxGroupPreview;
+      document.getElementById('menu-group-btn').innerText = l.ctxGroup;
+
+      document.getElementById('optVideo').innerText = l.optVideo;
+      document.getElementById('optDesign').innerText = l.optDesign;
+      document.getElementById('optPhoto').innerText = l.optPhoto;
+
+      document.getElementById('modalBrand').placeholder = l.modalBrandPh;
+      document.getElementById('modalCardTitle').placeholder = l.modalTitlePh;
+      document.getElementById('modalTargetUrl').placeholder = l.modalUrlPh;
+      document.getElementById('modalImageUrl').placeholder = l.modalImgPh;
+
+      document.getElementById('btnModalCancel').innerText = l.btnCancel;
+      document.getElementById('btnModalSave').innerText = l.btnSave;
+
+      document.getElementById('lblGroupTitle').innerText = l.groupTitle;
+      document.getElementById('lblGroupDesc').innerText = l.groupDesc;
+      document.getElementById('btnUngroup').innerText = l.btnUngroup;
+      document.getElementById('btnCloseGroup').innerText = l.btnClose;
+
+      document.getElementById('langBtn').innerText = window.currentLang;
+      renderCards();
+    }
+
+    window.toggleLanguage = function() {
+      window.currentLang = window.currentLang === 'TR' ? 'EN' : 'TR';
+      localStorage.setItem('137_lang', window.currentLang);
+      applyLanguage();
+    };
+
+    function updateTransform() {
+      const viewport = document.getElementById('board-viewport');
+      const container = document.getElementById('board-container');
+      if (viewport) {
+        viewport.style.transform = `translate(${window.panX}px, ${window.panY}px) scale(${window.zoomScale})`;
+      }
+      if (container) {
+        container.style.backgroundPosition = `${window.panX}px ${window.panY}px, 0 0, 0 0`;
+        container.style.backgroundSize = `${24 * window.zoomScale}px ${24 * window.zoomScale}px, 100% 100%, 100% 100%`;
+      }
+      const zoomBtn = document.getElementById('zoomDisplayBtn');
+      if (zoomBtn) {
+        zoomBtn.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          %${Math.round(window.zoomScale * 100)}
+        `;
+      }
+    }
+
+    window.resetZoom = function() {
+      window.zoomScale = 1;
+      window.panX = 0;
+      window.panY = 0;
+      updateTransform();
+    };
+
+    function setupZoomAndPan() {
+      const container = document.getElementById('board-container');
+
+      container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const zoomFactor = 0.08;
+        let delta = e.deltaY < 0 ? zoomFactor : -zoomFactor;
+        let newScale = Math.min(Math.max(0.3, window.zoomScale + delta), 3.0);
+
+        const rect = container.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        window.panX -= (mouseX - window.panX) * (newScale / window.zoomScale - 1);
+        window.panY -= (mouseY - window.panY) * (newScale / window.zoomScale - 1);
+        window.zoomScale = newScale;
+
+        updateTransform();
+      }, { passive: false });
+
+      let isPanning = false;
+      let startX = 0, startY = 0;
+
+      container.addEventListener('mousedown', (e) => {
+        if (e.button === 1 || (e.button === 0 && e.spaceKey)) {
+          isPanning = true;
+          startX = e.clientX - window.panX;
+          startY = e.clientY - window.panY;
+          container.style.cursor = 'grabbing';
+          e.preventDefault();
+        }
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isPanning) return;
+        window.panX = e.clientX - startX;
+        window.panY = e.clientY - startY;
+        updateTransform();
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isPanning) {
+          isPanning = false;
+          container.style.cursor = 'default';
+        }
+      });
+    }
+
+    function getNextDefaultBoardName() {
+      const keys = Object.keys(window.savedBoards);
+      let count = 1;
+      while (keys.includes(`Varsayılan Pano ${count}`)) { count++; }
+      return `Varsayılan Pano ${count}`;
+    }
+
+    window.autoSave = function() {
+      if (!window.currentBoardName) window.currentBoardName = getNextDefaultBoardName();
       window.savedBoards[window.currentBoardName] = JSON.parse(JSON.stringify(window.cardsData));
       localStorage.setItem('137_saved_boards', JSON.stringify(window.savedBoards));
       localStorage.setItem('137_active_board_name', window.currentBoardName);
@@ -575,43 +632,115 @@
       }
     };
 
+    window.saveAllToStorage = window.autoSave;
+
     window.onload = () => {
       if (Object.keys(window.savedBoards).length === 0) {
+        window.currentBoardName = 'Varsayılan Pano 1';
         window.cardsData = [
           { id: 1, type: 'link', brand: 'Coffeetainer', category: 'design', title: 'Sosyal Medya UI Referansı', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500', url: 'https://pinterest.com', x: 50, y: 50, w: 220, h: 220, zIndex: 1, groupId: null },
-          { id: 2, type: 'text', brand: 'Genel', category: 'text', title: 'Kampanya Tasarım Notları & Tipografi', textColor: '#0022FF', x: 300, y: 50, w: 220, h: 140, zIndex: 2, groupId: null }
+          { id: 2, type: 'text', brand: 'Genel', category: 'text', title: 'Kampanya Tasarım Notları & Tipografi', x: 300, y: 50, fontSize: 18, zIndex: 2, groupId: null }
         ];
         window.savedBoards[window.currentBoardName] = window.cardsData;
-        window.saveAllToStorage();
+        window.autoSave();
       } else {
         window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[window.currentBoardName] || []));
       }
 
+      applyLanguage();
       renderBoardsList();
       renderCards();
+      updateBoardTitleDisplay();
       setupContextMenu();
+      setupAreaSelection();
+      setupPasteListener();
+      setupZoomAndPan();
+      setupEditableBoardTitle();
 
       if (navigator.onLine) initFirebase();
     };
 
-    // --- TEMA VE SIDEBAR ---
+    function setupEditableBoardTitle() {
+      const titleEl = document.getElementById('currentBoardTitleDisplay');
+      if (!titleEl) return;
+
+      titleEl.ondblclick = (e) => {
+        e.stopPropagation();
+        titleEl.contentEditable = "true";
+        titleEl.focus();
+        document.execCommand('selectAll', false, null);
+      };
+
+      titleEl.onblur = titleEl.onkeydown = (ev) => {
+        if (ev.type === 'blur' || ev.key === 'Enter') {
+          if (ev.key === 'Enter') ev.preventDefault();
+          titleEl.contentEditable = "false";
+          const newName = titleEl.innerText.trim() || window.currentBoardName;
+
+          if (newName !== window.currentBoardName) {
+            window.savedBoards[newName] = window.savedBoards[window.currentBoardName];
+            delete window.savedBoards[window.currentBoardName];
+            window.currentBoardName = newName;
+            window.autoSave();
+            renderBoardsList();
+            updateBoardTitleDisplay();
+          } else {
+            titleEl.innerText = window.currentBoardName;
+          }
+        }
+      };
+    }
+
+    function updateBoardTitleDisplay() {
+      const el = document.getElementById('currentBoardTitleDisplay');
+      if (el) el.innerText = window.currentBoardName;
+    }
+
     window.toggleTheme = function() {
       const cur = document.body.getAttribute('data-theme');
       const next = cur === 'light' ? 'dark' : 'light';
       document.body.setAttribute('data-theme', next);
-      document.getElementById('themeBtn').innerText = next === 'light' ? '☀️ Light' : '🌙 Dark';
+      document.getElementById('themeBtn').innerText = next === 'light' ? 'Light' : 'Dark';
     };
 
     window.toggleSidebar = function() {
-      document.getElementById('sidebar').classList.toggle('active');
+      document.getElementById('sidebar').classList.toggle('collapsed');
     };
 
     window.saveCurrentBoard = function() {
-      const name = prompt('Pano ismi:', window.currentBoardName);
-      if (name) {
-        window.currentBoardName = name.trim();
-        window.saveAllToStorage();
+      const defaultSuggested = getNextDefaultBoardName();
+      const inputName = prompt('Yeni Pano İsmi:', defaultSuggested);
+      const name = (inputName && inputName.trim() !== '') ? inputName.trim() : defaultSuggested;
+
+      window.currentBoardName = name;
+      window.cardsData = [];
+      window.autoSave();
+      renderBoardsList();
+      renderCards();
+      updateBoardTitleDisplay();
+    };
+
+    window.deleteBoard = function(bName, e) {
+      e.stopPropagation();
+      if (confirm(`"${bName}" panosunu silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`)) {
+        delete window.savedBoards[bName];
+        
+        if (window.currentBoardName === bName) {
+          const remainingBoards = Object.keys(window.savedBoards);
+          if (remainingBoards.length > 0) {
+            window.currentBoardName = remainingBoards[0];
+            window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[window.currentBoardName]));
+          } else {
+            window.currentBoardName = getNextDefaultBoardName();
+            window.cardsData = [];
+            window.savedBoards[window.currentBoardName] = window.cardsData;
+          }
+        }
+
+        window.autoSave();
         renderBoardsList();
+        renderCards();
+        updateBoardTitleDisplay();
       }
     };
 
@@ -621,63 +750,170 @@
       Object.keys(window.savedBoards).forEach(bName => {
         const item = document.createElement('div');
         item.className = `board-item ${bName === window.currentBoardName ? 'active' : ''}`;
-        item.innerText = bName;
+        
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'board-item-title';
+        titleSpan.innerText = bName;
+
+        titleSpan.ondblclick = (e) => {
+          e.stopPropagation();
+          const input = document.createElement('input');
+          input.className = 'board-item-input';
+          input.value = bName;
+          item.replaceChild(input, titleSpan);
+          input.focus();
+
+          input.onblur = input.onkeydown = (ev) => {
+            if (ev.type === 'blur' || ev.key === 'Enter') {
+              const newName = input.value.trim() || bName;
+              if (newName !== bName) {
+                window.savedBoards[newName] = window.savedBoards[bName];
+                delete window.savedBoards[bName];
+                if (window.currentBoardName === bName) window.currentBoardName = newName;
+                window.autoSave();
+                renderBoardsList();
+                updateBoardTitleDisplay();
+              } else {
+                renderBoardsList();
+              }
+            }
+          };
+        };
+
+        const deleteBtn = document.createElement('div');
+        deleteBtn.className = 'board-delete-btn';
+        deleteBtn.innerHTML = closeSvg;
+        deleteBtn.title = 'Panoyu Sil';
+        deleteBtn.onclick = (e) => window.deleteBoard(bName, e);
+
+        item.appendChild(titleSpan);
+        item.appendChild(deleteBtn);
+
         item.onclick = () => {
           window.currentBoardName = bName;
           window.cardsData = JSON.parse(JSON.stringify(window.savedBoards[bName]));
-          window.saveAllToStorage();
+          window.autoSave();
           renderBoardsList();
           renderCards();
+          updateBoardTitleDisplay();
         };
         listEl.appendChild(item);
       });
     }
 
-    // --- KARTLARI ÇİZME VE ETKİLEŞİM ---
+    // GRUP AÇMA MODALI
+    window.openGroupModal = function(groupId) {
+      window.activeModalGroupId = groupId;
+      const groupItems = window.cardsData.filter(c => c.groupId === groupId);
+      const previewEl = document.getElementById('groupItemsPreview');
+      previewEl.innerHTML = '';
+
+      if(groupItems.length === 0) {
+        previewEl.innerHTML = '<div style="font-size:0.75rem; color:var(--text-muted);">Grupta öğe bulunamadı.</div>';
+      } else {
+        groupItems.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'group-item-row';
+          row.innerHTML = `
+            <span>${item.title || 'İsimsiz Öğe'}</span>
+            <button onclick="removeFromGroup(${item.id})" style="background:none; border:none; color:#ff4757; cursor:pointer; font-weight:bold;">Çıkar</button>
+          `;
+          previewEl.appendChild(row);
+        });
+      }
+
+      document.getElementById('groupModal').classList.add('active');
+    };
+
+    window.closeGroupModal = function() {
+      document.getElementById('groupModal').classList.remove('active');
+      window.activeModalGroupId = null;
+    };
+
+    window.removeFromGroup = function(itemId) {
+      const item = window.cardsData.find(c => c.id === itemId);
+      if (item) {
+        item.groupId = null;
+        window.autoSave();
+        renderCards();
+        if (window.activeModalGroupId) openGroupModal(window.activeModalGroupId);
+      }
+    };
+
+    window.ungroupCurrentModalGroup = function() {
+      if (window.activeModalGroupId) {
+        window.cardsData.filter(c => c.groupId === window.activeModalGroupId).forEach(c => c.groupId = null);
+        window.autoSave();
+        renderCards();
+        closeGroupModal();
+      }
+    };
+
+    // RENDER: KARTLAR VE METİNLER
     window.renderCards = function() {
-      const container = document.getElementById('board-container');
-      document.querySelectorAll('.card').forEach(el => el.remove());
+      const viewport = document.getElementById('board-viewport');
+      const l = dict[window.currentLang];
+      document.querySelectorAll('.card, .canvas-text-element').forEach(el => el.remove());
 
       window.cardsData.forEach(card => {
-        const cardEl = document.createElement('div');
-        cardEl.className = `card ${card.groupId ? 'grouped' : ''} ${window.selectedCardIds.includes(card.id) ? 'selected' : ''}`;
-        cardEl.style.left = `${card.x}px`;
-        cardEl.style.top = `${card.y}px`;
-        cardEl.style.width = `${card.w || 200}px`;
-        cardEl.style.height = `${card.h || 180}px`;
-        cardEl.style.zIndex = card.zIndex || 1;
-        cardEl.dataset.id = card.id;
+        if (card.type === 'text') {
+          const textEl = document.createElement('div');
+          textEl.className = `canvas-text-element ${card.groupId ? 'grouped' : ''} ${window.selectedCardIds.includes(card.id) ? 'selected' : ''}`;
+          textEl.style.left = `${card.x}px`;
+          textEl.style.top = `${card.y}px`;
+          textEl.style.fontSize = `${card.fontSize || 18}px`;
+          textEl.style.zIndex = card.zIndex || 1;
+          textEl.dataset.id = card.id;
 
-        const catMap = { video: 'Video', design: 'Tasarım', photo: 'Fotoğraf', text: 'Metin' };
-        const linkHTML = card.url ? `<a href="${card.url}" target="_blank" class="card-link">🔗 Bağlantıya Git</a>` : '';
+          textEl.innerHTML = `
+            <span>${card.title || l.defaultText}</span>
+            <div class="canvas-text-delete" onclick="deleteCard(${card.id}, event)">${closeSvg}</div>
+            <div class="resizer"></div>
+          `;
 
-        cardEl.innerHTML = `
-          <div class="card-top-bar">
-            <span class="card-tag tag-${card.category}">${catMap[card.category] || 'Metin'}</span>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span class="brand-tag">${card.brand || 'Genel'}</span>
-              <div class="card-delete" onclick="deleteCard(${card.id}, event)">✕</div>
+          makeInteractive(textEl, card, true);
+          viewport.appendChild(textEl);
+        } else {
+          // STANDART KART
+          const cardEl = document.createElement('div');
+          cardEl.className = `card ${card.groupId ? 'grouped' : ''} ${window.selectedCardIds.includes(card.id) ? 'selected' : ''}`;
+          cardEl.style.left = `${card.x}px`;
+          cardEl.style.top = `${card.y}px`;
+          cardEl.style.width = `${card.w || 200}px`;
+          cardEl.style.height = `${card.h || 180}px`;
+          cardEl.style.zIndex = card.zIndex || 1;
+          cardEl.dataset.id = card.id;
+
+          const catMap = { video: l.optVideo, design: l.optDesign, photo: l.optPhoto };
+          const linkHTML = card.url ? `<a href="${card.url}" target="_blank" class="card-link" onclick="event.stopPropagation()">${l.btnGoLink}</a>` : '';
+
+          cardEl.innerHTML = `
+            <div class="card-top-bar">
+              <span class="card-tag tag-${card.category}">${catMap[card.category] || 'Görsel'}</span>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <span class="brand-tag">${card.brand || l.general}</span>
+                <div class="card-delete" onclick="deleteCard(${card.id}, event)">${closeSvg}</div>
+              </div>
             </div>
-          </div>
-          ${card.img ? `<div class="card-img-wrapper"><img src="${card.img}"></div>` : ''}
-          <h4>${card.title}</h4>
-          ${linkHTML}
-          <div class="resizer"></div>
-        `;
+            ${card.img ? `<div class="card-img-wrapper"><img src="${card.img}" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500'"></div>` : ''}
+            <h4>${card.title}</h4>
+            ${linkHTML}
+            <div class="resizer"></div>
+          `;
 
-        makeInteractive(cardEl, card);
-        container.appendChild(cardEl);
+          makeInteractive(cardEl, card, false);
+          viewport.appendChild(cardEl);
+        }
       });
     };
 
-    // --- INTERACTIVE (SÜRÜKLE & BÜYÜT) ---
-    function makeInteractive(el, data) {
+    function makeInteractive(el, data, isText = false) {
       let isDragging = false, isResizing = false;
-      let startX, startY, initialW, initialH;
+      let startX, startY, initialW, initialH, initialFont;
       let groupInitialPositions = [];
 
       function onStart(e) {
-        if (e.target.classList.contains('card-delete') || e.target.classList.contains('card-link')) return;
+        if (e.target.closest('.card-delete') || e.target.classList.contains('card-link') || e.target.closest('.canvas-text-delete')) return;
 
         const pageX = e.touches ? e.touches[0].clientX : e.clientX;
         const pageY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -688,12 +924,10 @@
 
         if (e.target.classList.contains('resizer')) {
           isResizing = true;
-          startX = pageX;
-          startY = pageY;
-          initialW = el.offsetWidth;
-          initialH = el.offsetHeight;
-          e.stopPropagation();
-          return;
+          startX = pageX; startY = pageY;
+          initialW = el.offsetWidth; initialH = el.offsetHeight;
+          initialFont = data.fontSize || 18;
+          e.stopPropagation(); return;
         }
 
         if (!window.selectedCardIds.includes(data.id)) {
@@ -706,11 +940,8 @@
           window.selectedCardIds = [...new Set([...window.selectedCardIds, ...gMembers])];
         }
 
-        renderCards();
-
         isDragging = true;
-        startX = pageX;
-        startY = pageY;
+        startX = pageX; startY = pageY;
 
         groupInitialPositions = window.selectedCardIds.map(id => {
           const c = window.cardsData.find(item => item.id === id);
@@ -724,23 +955,26 @@
         const pageX = e.touches ? e.touches[0].clientX : e.clientX;
         const pageY = e.touches ? e.touches[0].clientY : e.clientY;
 
-        const dx = pageX - startX;
-        const dy = pageY - startY;
+        const dx = (pageX - startX) / window.zoomScale;
+        const dy = (pageY - startY) / window.zoomScale;
 
         if (isResizing) {
-          const newW = Math.max(160, initialW + dx);
-          const newH = Math.max(100, initialH + dy);
-          el.style.width = `${newW}px`;
-          el.style.height = `${newH}px`;
-          data.w = newW;
-          data.h = newH;
+          if (isText) {
+            const newFont = Math.max(12, Math.min(120, initialFont + Math.round((dx + dy) * 0.2)));
+            el.style.fontSize = `${newFont}px`;
+            data.fontSize = newFont;
+          } else {
+            const newW = Math.max(160, initialW + dx);
+            const newH = Math.max(100, initialH + dy);
+            el.style.width = `${newW}px`; el.style.height = `${newH}px`;
+            data.w = newW; data.h = newH;
+          }
         } else if (isDragging) {
           groupInitialPositions.forEach(pos => {
             const cardObj = window.cardsData.find(item => item.id === pos.id);
             if (cardObj) {
-              cardObj.x = pos.x + dx;
-              cardObj.y = pos.y + dy;
-              const cardElement = document.querySelector(`.card[data-id="${pos.id}"]`);
+              cardObj.x = pos.x + dx; cardObj.y = pos.y + dy;
+              const cardElement = document.querySelector(`[data-id="${pos.id}"]`);
               if (cardElement) {
                 cardElement.style.left = `${cardObj.x}px`;
                 cardElement.style.top = `${cardObj.y}px`;
@@ -752,9 +986,8 @@
 
       function onEnd() {
         if (isDragging || isResizing) {
-          isDragging = false;
-          isResizing = false;
-          window.saveAllToStorage();
+          isDragging = false; isResizing = false;
+          window.autoSave();
         }
       }
 
@@ -768,7 +1001,132 @@
       window.addEventListener('touchend', onEnd);
     }
 
-    // --- KLASÖR GİBİ KATMANLI GRUPLAMA ---
+    function setupAreaSelection() {
+      const container = document.getElementById('board-container');
+      const box = document.getElementById('selection-box');
+      let startX = 0, startY = 0, isSelecting = false;
+
+      container.addEventListener('mousedown', (e) => {
+        if (e.target.closest('.card') || e.target.closest('.canvas-text-element') || e.target.closest('.board-header') || e.target.closest('.active-board-title') || e.button !== 0 || e.spaceKey) return;
+
+        isSelecting = true;
+        const rect = container.getBoundingClientRect();
+        startX = (e.clientX - rect.left - window.panX) / window.zoomScale;
+        startY = (e.clientY - rect.top - window.panY) / window.zoomScale;
+
+        box.style.left = `${startX}px`; box.style.top = `${startY}px`;
+        box.style.width = '0px'; box.style.height = '0px';
+        box.style.display = 'block';
+
+        if (!e.shiftKey) {
+          window.selectedCardIds = [];
+          renderCards();
+        }
+
+        function onMouseMove(e) {
+          if (!isSelecting) return;
+          const currentX = (e.clientX - rect.left - window.panX) / window.zoomScale;
+          const currentY = (e.clientY - rect.top - window.panY) / window.zoomScale;
+
+          const width = Math.abs(currentX - startX);
+          const height = Math.abs(currentY - startY);
+          const left = Math.min(currentX, startX);
+          const top = Math.min(currentY, startY);
+
+          box.style.width = `${width}px`; box.style.height = `${height}px`;
+          box.style.left = `${left}px`; box.style.top = `${top}px`;
+
+          window.cardsData.forEach(card => {
+            const cardRight = card.x + (card.w || 150);
+            const cardBottom = card.y + (card.h || 50);
+
+            const isIntersecting = !(card.x > left + width || cardRight < left || card.y > top + height || cardBottom < top);
+
+            if (isIntersecting) {
+              if (!window.selectedCardIds.includes(card.id)) window.selectedCardIds.push(card.id);
+            } else if (!e.shiftKey) {
+              window.selectedCardIds = window.selectedCardIds.filter(id => id !== card.id);
+            }
+          });
+
+          document.querySelectorAll('.card, .canvas-text-element').forEach(cEl => {
+            const cId = parseInt(cEl.dataset.id);
+            if (window.selectedCardIds.includes(cId)) cEl.classList.add('selected');
+            else cEl.classList.remove('selected');
+          });
+        }
+
+        function onMouseUp() {
+          if (isSelecting) {
+            isSelecting = false;
+            box.style.display = 'none';
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+          }
+        }
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      });
+    }
+
+    function extractSocialMediaThumbnail(url) {
+      const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+      if (ytMatch && ytMatch[1]) {
+        return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+      }
+      return `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`;
+    }
+
+    function setupPasteListener() {
+      document.addEventListener('paste', (e) => {
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName) || document.activeElement.isContentEditable) return;
+
+        const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+        if (pastedText && pastedText.trim().startsWith('http')) {
+          e.preventDefault();
+          const url = pastedText.trim();
+          
+          let brand = 'Sosyal Medya';
+          let category = 'design';
+          let title = 'Referans Fikri';
+
+          if (url.includes('instagram.com')) {
+            brand = 'Instagram';
+            if (url.includes('/reel/') || url.includes('/reels/')) {
+              category = 'video'; title = 'Instagram Reel Referansı';
+            } else {
+              category = 'design'; title = 'Instagram Gönderisi';
+            }
+          } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+            brand = 'YouTube'; category = 'video';
+            title = url.includes('/shorts/') ? 'YouTube Shorts Referansı' : 'YouTube Video Referansı';
+          } else if (url.includes('pinterest.com') || url.includes('pin.it')) {
+            brand = 'Pinterest'; category = 'design'; title = 'Pinterest Pin Referansı';
+          } else {
+            try {
+              const domain = new URL(url).hostname.replace('www.', '');
+              brand = domain.charAt(0).toLocaleUpperCase('tr-TR') + domain.slice(1);
+            } catch(err) {}
+          }
+
+          const img = extractSocialMediaThumbnail(url);
+
+          window.cardsData.push({
+            id: Date.now(),
+            type: 'link', brand, category, title, img, url,
+            x: 100 + Math.floor(Math.random() * 80),
+            y: 100 + Math.floor(Math.random() * 80),
+            w: 220, h: 220,
+            zIndex: ++window.highestZIndex, groupId: null
+          });
+
+          window.autoSave();
+          renderCards();
+        }
+      });
+    }
+
     window.contextToggleGroup = function() {
       if (window.selectedCardIds.length < 2) return;
 
@@ -793,13 +1151,12 @@
         window.highestZIndex += selectedObjects.length;
       }
 
-      window.saveAllToStorage();
+      window.autoSave();
       renderCards();
     };
 
-    // --- TIKLANABİLİR PDF İNDİRME ---
     window.downloadPDF = function() {
-      const board = document.getElementById('board-container');
+      const board = document.getElementById('board-viewport');
       const opt = {
         margin:       10,
         filename:     `${window.currentBoardName}_Moodboard.pdf`,
@@ -811,38 +1168,73 @@
       html2pdf().set(opt).from(board).save();
     };
 
-    // --- SAĞ TIK & MOBİL UZUN BASMA MENÜSÜ ---
     function setupContextMenu() {
       const board = document.getElementById('board-container');
       const menu = document.getElementById('context-menu');
 
-      function openMenu(x, y) {
-        window.rightClickPos = { x, y };
-        menu.style.left = `${x}px`;
-        menu.style.top = `${y}px`;
+      board.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        
+        const container = document.getElementById('board-container');
+        const rect = container.getBoundingClientRect();
+        
+        window.rightClickPos = {
+          x: (e.clientX - rect.left - window.panX) / window.zoomScale,
+          y: (e.clientY - rect.top - window.panY) / window.zoomScale
+        };
 
+        const targetEl = e.target.closest('.card, .canvas-text-element');
+        const editBtn = document.getElementById('menu-edit-btn');
+        const groupPreviewBtn = document.getElementById('menu-group-preview-btn');
         const groupBtn = document.getElementById('menu-group-btn');
+
+        if (targetEl) {
+          const cardId = parseInt(targetEl.dataset.id);
+          window.targetCardForContext = window.cardsData.find(c => c.id === cardId);
+          editBtn.style.display = 'block';
+
+          if (window.targetCardForContext && window.targetCardForContext.groupId) {
+            groupPreviewBtn.style.display = 'block';
+          } else {
+            groupPreviewBtn.style.display = 'none';
+          }
+        } else {
+          window.targetCardForContext = null;
+          editBtn.style.display = 'none';
+          groupPreviewBtn.style.display = 'none';
+        }
+
         if (window.selectedCardIds.length > 1) {
           groupBtn.style.display = 'block';
         } else {
           groupBtn.style.display = 'none';
         }
-        menu.style.display = 'block';
-      }
 
-      board.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        openMenu(e.clientX, e.clientY);
+        menu.style.left = `${e.clientX}px`; 
+        menu.style.top = `${e.clientY}px`;
+        menu.style.display = 'block';
       });
 
       document.addEventListener('click', () => menu.style.display = 'none');
     }
 
+    window.contextEditItem = function() {
+      if (window.targetCardForContext) {
+        window.openEditModal(window.targetCardForContext);
+      }
+    };
+
+    window.contextOpenGroupPreview = function() {
+      if (window.targetCardForContext && window.targetCardForContext.groupId) {
+        window.openGroupModal(window.targetCardForContext.groupId);
+      }
+    };
+
     window.deleteCard = function(id, e) {
       if (e) e.stopPropagation();
       window.cardsData = window.cardsData.filter(c => c.id !== id);
       window.selectedCardIds = window.selectedCardIds.filter(sId => sId !== id);
-      window.saveAllToStorage();
+      window.autoSave();
       renderCards();
     };
 
@@ -850,52 +1242,99 @@
       if (confirm('Mevcut panoyu temizlemek istediğinize emin misiniz?')) {
         window.cardsData = [];
         window.selectedCardIds = [];
-        window.saveAllToStorage();
+        window.autoSave();
         renderCards();
       }
     };
 
     window.openCreateModal = function() {
+      document.getElementById('modalCardId').value = '';
+      document.getElementById('modalTitle').innerText = window.currentLang === 'TR' ? 'Yeni Kart Ekle' : 'Add New Card';
+      document.getElementById('brandCategoryGroup').style.display = 'block';
+      document.getElementById('urlInputsGroup').style.display = 'block';
+      document.getElementById('modalBrand').value = '';
+      document.getElementById('modalCategory').value = 'design';
+      document.getElementById('modalCardTitle').value = '';
+      document.getElementById('modalTargetUrl').value = '';
+      document.getElementById('modalImageUrl').value = '';
       document.getElementById('glassModal').classList.add('active');
     };
 
-    window.closeModal = function() {
-      document.getElementById('glassModal').classList.remove('active');
+    window.openEditModal = function(card) {
+      const l = dict[window.currentLang];
+      document.getElementById('modalCardId').value = card.id;
+      document.getElementById('modalTitle').innerText = card.type === 'text' ? (window.currentLang === 'TR' ? 'Metni Düzenle' : 'Edit Text') : (window.currentLang === 'TR' ? 'Kart Özelliklerini Düzenle' : 'Edit Card Properties');
+      
+      if (card.type === 'text') {
+        document.getElementById('brandCategoryGroup').style.display = 'none';
+        document.getElementById('urlInputsGroup').style.display = 'none';
+      } else {
+        document.getElementById('brandCategoryGroup').style.display = 'block';
+        document.getElementById('urlInputsGroup').style.display = 'block';
+        document.getElementById('modalBrand').value = card.brand || '';
+        document.getElementById('modalCategory').value = card.category || 'design';
+        document.getElementById('modalTargetUrl').value = card.url || '';
+        document.getElementById('modalImageUrl').value = card.img || '';
+      }
+
+      document.getElementById('modalCardTitle').value = card.title || '';
+      document.getElementById('glassModal').classList.add('active');
     };
 
+    window.closeModal = function() { document.getElementById('glassModal').classList.remove('active'); };
+
     window.saveModalData = function() {
-      const brand = document.getElementById('modalBrand').value || 'Genel';
-      const title = document.getElementById('modalCardTitle').value || 'Referans Notu';
-      const category = document.getElementById('modalCategory').value;
-      const url = document.getElementById('modalTargetUrl').value;
-      const img = document.getElementById('modalImageUrl').value || (url ? `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url` : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
+      const cardId = document.getElementById('modalCardId').value;
+      const l = dict[window.currentLang];
+      const title = document.getElementById('modalCardTitle').value || (window.currentLang === 'TR' ? 'Referans Notu' : 'Reference Note');
 
-      window.cardsData.push({
-        id: Date.now(),
-        type: 'link',
-        brand, category, title, img, url,
-        x: 60, y: 60, w: 220, h: 220,
-        zIndex: ++window.highestZIndex,
-        groupId: null
-      });
+      if (cardId) {
+        const card = window.cardsData.find(c => c.id === parseInt(cardId));
+        if (card) {
+          card.title = title;
+          if (card.type !== 'text') {
+            card.brand = document.getElementById('modalBrand').value || l.general;
+            card.category = document.getElementById('modalCategory').value;
+            card.url = document.getElementById('modalTargetUrl').value;
+            card.img = document.getElementById('modalImageUrl').value || (card.url ? extractSocialMediaThumbnail(card.url) : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
+          }
+        }
+      } else {
+        const brand = document.getElementById('modalBrand').value || l.general;
+        const category = document.getElementById('modalCategory').value;
+        const url = document.getElementById('modalTargetUrl').value;
+        const img = document.getElementById('modalImageUrl').value || (url ? extractSocialMediaThumbnail(url) : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500');
 
-      window.saveAllToStorage();
+        window.cardsData.push({
+          id: Date.now(),
+          type: 'link', brand, category, title, img, url,
+          x: 60, y: 60, w: 220, h: 220,
+          zIndex: ++window.highestZIndex, groupId: null
+        });
+      }
+
+      window.autoSave();
       renderCards();
       closeModal();
     };
 
     window.contextAddText = function() {
+      const newId = Date.now();
+      const l = dict[window.currentLang];
       window.cardsData.push({
-        id: Date.now(),
+        id: newId,
         type: 'text',
-        brand: 'Not', category: 'text',
-        title: 'Yeni Not...',
-        x: window.rightClickPos.x, y: window.rightClickPos.y,
-        w: 200, h: 120,
+        brand: 'Metin',
+        category: 'text',
+        title: l.defaultText,
+        x: window.rightClickPos.x,
+        y: window.rightClickPos.y,
+        fontSize: 20,
         zIndex: ++window.highestZIndex,
         groupId: null
       });
-      window.saveAllToStorage();
+
+      window.autoSave();
       renderCards();
     };
 
